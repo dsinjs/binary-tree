@@ -1,0 +1,46 @@
+{
+  "name": "@dsinjs/binary-tree",
+  "version": "1.0.2",
+  "description": "Binary Trees for your DS in JS",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha",
+    "build": "npm run babel && npm run browserify && npm run uglifyjs",
+    "babel": "babel src -d dist",
+    "browserify": "browserify dist/index.js -o dist/dsinjs-binarytree.js",
+    "uglifyjs": "uglifyjs --compress --mangle --output dist/dsinjs-binarytree.min.js -- dist/dsinjs-binarytree.js",
+    "doc": "npm run documentmd && npm run documenthtml",
+    "documentmd": "documentation build src/index.js -f md -o DOCUMENTATION.md",
+    "documenthtml": "documentation build src/index.js -f html -o docs"
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dsinjs/binary-tree.git"
+  },
+  "keywords": [
+    "Node",
+    "JS",
+    "DataStructure",
+    "Trees",
+    "Binary",
+    "Trees"
+  ],
+  "author": "Siddhesh Kulkarni",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dsinjs/binary-tree/issues"
+  },
+  "homepage": "https://github.com/dsinjs/binary-tree#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-latest": "^6.24.1",
+    "browserify": "^17.0.0",
+    "mocha": "^8.2.1",
+    "should": "^13.2.3",
+    "uglify-js": "^3.12.0"
+  }
+}
