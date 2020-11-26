@@ -1,8 +1,8 @@
 # @dsinjs/binary-tree
 Data structure in your javascript code, Binary Trees.
 
-[![Build Status](https://travis-ci.com/siddhesh321995/node-dsinjs-binarytree.svg?branch=main)](https://travis-ci.com/siddhesh321995/node-dsinjs-binarytree)
-![Node.js CI](https://github.com/dsinjs/binary-tree/workflows/Node.js%20CI/badge.svg)
+[![Build Status](https://travis-ci.com/dsinjs/binary-tree.svg?branch=main)](https://travis-ci.com/dsinjs/binary-tree)
+![Node.js CI](https://github.com/dsinjs/binary-tree/workflows/Node.js%20CI/badge.svg?branch=main)
 [![Coverage Status](https://coveralls.io/repos/github/siddhesh321995/node-dsinjs-binarytree/badge.svg?branch=main)](https://coveralls.io/github/siddhesh321995/node-dsinjs-binarytree?branch=main)
 
 ## Installation:
