@@ -3,7 +3,7 @@ Data structure in your javascript code, Binary Trees.
 
 [![Build Status](https://travis-ci.com/dsinjs/binary-tree.svg?branch=main)](https://travis-ci.com/dsinjs/binary-tree)
 ![Node.js CI](https://github.com/dsinjs/binary-tree/workflows/Node.js%20CI/badge.svg?branch=main)
-[![Coverage Status](https://coveralls.io/repos/github/siddhesh321995/node-dsinjs-binarytree/badge.svg?branch=main)](https://coveralls.io/github/siddhesh321995/node-dsinjs-binarytree?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/dsinjs/binary-tree/badge.svg?branch=main)](https://coveralls.io/github/dsinjs/binary-tree?branch=main)
 
 ## Installation:
 Using npm
@@ -31,14 +31,12 @@ var nodel = new BTreeNode({ value: 15, lNode: node });
 ```
 
 ## Complete Documentation
-Checkout [DOCUMENTATION.md](DOCUMENTATION.md) for complete documentation or View Documentation online at [https://github.com/dsinjs/binary-tree/](https://github.com/dsinjs/binary-tree/)
+Checkout [DOCUMENTATION.md](DOCUMENTATION.md) for complete documentation or View Documentation online at [https://dsinjs.github.io/binary-tree/](https://dsinjs.github.io/binary-tree/)
 
 ## All Features:
-- Data type check functions.
-- Frontend XHR wrapper.
-- EnumGenerator, defaultsGenerator functions.
-- 0 Dependancy.
+- All data structure functionality.
+- extra functions like toString(), toJSON(), validate() etc.
 
 ## Help us expand:
 Let me know in issues/github page or on email which javascript functions to include in next release.
-Check all the [Contributors](Contributors.md) to this library.
+Check all the [Contributing authors](CONTRIBUTING.md) to this library.
