@@ -3,7 +3,6 @@ Data structure in your javascript code, Binary Trees.
 
 [![Build Status](https://travis-ci.com/dsinjs/binary-tree.svg?branch=main)](https://travis-ci.com/dsinjs/binary-tree)
 ![Node.js CI](https://github.com/dsinjs/binary-tree/workflows/Node.js%20CI/badge.svg?branch=main)
-[![Coverage Status](https://coveralls.io/repos/github/dsinjs/binary-tree/badge.svg?branch=main)](https://coveralls.io/github/dsinjs/binary-tree?branch=main)
 
 ## Installation:
 Using npm
@@ -17,25 +16,26 @@ Or directly on your browser, simply download your file from the following:
 <script type="application/javascript" src="dsinjs-binarytree.js"></script>
 <script type="application/javascript" src="dsinjs-binarytree.min.js"></script>
 ```
-## Recent features added in the library
-- Ajax: XHR wrapper for frontend.
-- EventManager: Custom event manager.
-
-## Some sample utility functions
+## Usage:
 ```
-const BTreeNode = require('@dsinjs/binary-tree');
+const { BTreeNode, BTree } = require('@dsinjs/binary-tree');
 ```
 ```
 var node = new BTreeNode({ value: 10 });
 var nodel = new BTreeNode({ value: 15, lNode: node });
 ```
+```
+var tree1 = new BTree({ value: 10 });
+var tree2 = new BTree({ root: 10 });
+var tree3 = new BTree(10);
+```
+## All Features:
+- All Binary Tree data structure functionality.
+- extra functions like toString(), toJSON(), validate() etc.
 
 ## Complete Documentation
 Checkout [DOCUMENTATION.md](DOCUMENTATION.md) for complete documentation or View Documentation online at [https://dsinjs.github.io/binary-tree/](https://dsinjs.github.io/binary-tree/)
 
-## All Features:
-- All data structure functionality.
-- extra functions like toString(), toJSON(), validate() etc.
 
 ## Help us expand:
 Let me know in issues/github page or on email which javascript functions to include in next release.
