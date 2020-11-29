@@ -754,7 +754,7 @@ var BTree = function () {
      * @returns {BTree} Returns current tree instance.
      * @example
      * var tree = BTree.fromArray([10, 20, 30, 40, 50, 60, 70, 80]);
-     * tree.reverse().toArray(); // [10, 30, 20, 70, 60, 50, 40, 80]
+     * tree.reverse().toArray(); // => [10, 30, 20, 70, 60, 50, 40, 80]
      */
 
   }, {
@@ -772,6 +772,89 @@ var BTree = function () {
       };
       trav(this.root);
       return this;
+    }
+
+    /**
+     * Returns first index of a value matched, if it is not present, it returns -1.
+     * @param {any} value Any value to find.
+     * @method indexOf
+     * @member
+     * @public
+     * @returns {number} Returns index of given item.
+     * @example
+     * var tree = BTree.fromArray([10, 20, 30, 40, 50, 60, 70, 80]);
+     * tree.indexOf(30); // => 3
+     * tree.indexOf(51); // => -1
+     */
+
+  }, {
+    key: "indexOf",
+    value: function indexOf(value) {
+      var retIndex = -1;
+      this.each(function (node, index) {
+        if (node.value === value && retIndex === -1) {
+          retIndex = index;
+        }
+      });
+
+      return retIndex;
+    }
+
+    /**
+     * Checks if given item exists or not, returns boolean.
+     * @param {any} value Any value to check if it exists or not.
+     * @method includes
+     * @member
+     * @public
+     * @returns {boolean} Returns true if it is present, otherwise false.
+     * @example
+     * var tree = BTree.fromArray([10, 20, 30, 40, 50, 60, 70, 80]);
+     * tree.includes(30); // true
+     * tree.includes(51); // false
+     */
+
+  }, {
+    key: "includes",
+    value: function includes(value) {
+      return this.indexOf(value) !== -1;
+    }
+
+    /**
+     * Checks if given item exists or not, returns boolean.
+     * @param {any} value Any value to check if it exists or not.
+     * @method exists
+     * @member
+     * @public
+     * @returns {boolean} Returns true if it is present, otherwise false.
+     * @example
+     * var tree = BTree.fromArray([10, 20, 30, 40, 50, 60, 70, 80]);
+     * tree.includes(30); // true
+     * tree.includes(51); // false
+     */
+
+  }, {
+    key: "exists",
+    value: function exists(value) {
+      return this.indexOf(value) !== -1;
+    }
+
+    /**
+     * Checks if given item exists or not, returns boolean.
+     * @param {any} value Any value to check if it exists or not.
+     * @method has
+     * @member
+     * @public
+     * @returns {boolean} Returns true if it is present, otherwise false.
+     * @example
+     * var tree = BTree.fromArray([10, 20, 30, 40, 50, 60, 70, 80]);
+     * tree.includes(30); // true
+     * tree.includes(51); // false
+     */
+
+  }, {
+    key: "has",
+    value: function has(value) {
+      return this.indexOf(value) !== -1;
     }
 
     /**

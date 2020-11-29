@@ -277,6 +277,50 @@ describe('@dsinjs/binary-tree', () => {
 
         done();
       });
+
+      it('indexOf()', (done) => {
+        var tree = BTree.fromArray([10, 20, 30, 40]);
+        tree.indexOf(10).should.equal(1);
+        tree.indexOf(20).should.equal(2);
+        tree.indexOf(30).should.equal(3);
+        tree.indexOf(40).should.equal(4);
+        tree.indexOf(50).should.equal(-1);
+
+        done();
+      });
+
+      it('includes()', (done) => {
+        var tree = BTree.fromArray([10, 20, 30, 40]);
+        tree.includes(10).should.equal(true);
+        tree.includes(20).should.equal(true);
+        tree.includes(30).should.equal(true);
+        tree.includes(40).should.equal(true);
+        tree.includes(50).should.equal(false);
+
+        done();
+      });
+
+      it('exists()', (done) => {
+        var tree = BTree.fromArray([10, 20, 30, 40]);
+        tree.exists(10).should.equal(true);
+        tree.exists(20).should.equal(true);
+        tree.exists(30).should.equal(true);
+        tree.exists(40).should.equal(true);
+        tree.exists(50).should.equal(false);
+
+        done();
+      });
+
+      it('has()', (done) => {
+        var tree = BTree.fromArray([10, 20, 30, 40]);
+        tree.has(10).should.equal(true);
+        tree.has(20).should.equal(true);
+        tree.has(30).should.equal(true);
+        tree.has(40).should.equal(true);
+        tree.has(50).should.equal(false);
+
+        done();
+      });
     });
 
     it('Mix 1 new, insert, insert, delete, toArray', (done) => {

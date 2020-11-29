@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset='utf-8'>
-  <title>@dsinjs/binary-tree 1.0.7 | Documentation</title>
+  <title>@dsinjs/binary-tree 1.0.8 | Documentation</title>
   <meta name='description' content='Binary Trees for your DS in JS'>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' rel='stylesheet'>
@@ -15,7 +15,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>@dsinjs/binary-tree</h3>
-          <div class='mb1'><code>1.0.7</code></div>
+          <div class='mb1'><code>1.0.8</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -232,6 +232,46 @@
                   href='#reverse'
                   class="">
                   reverse
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#indexof'
+                  class="">
+                  indexOf
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#includes'
+                  class="">
+                  includes
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#exists'
+                  class="">
+                  exists
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#has'
+                  class="">
+                  has
                   
                 </a>
                 
@@ -1825,7 +1865,327 @@ Does not return new instance, returns current tree instance.</p>
     
       
       <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> tree = BTree.fromArray([<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>, <span class="hljs-number">40</span>, <span class="hljs-number">50</span>, <span class="hljs-number">60</span>, <span class="hljs-number">70</span>, <span class="hljs-number">80</span>]);
-tree.reverse().toArray(); <span class="hljs-comment">// [10, 30, 20, 70, 60, 50, 40, 80]</span></pre>
+tree.reverse().toArray(); <span class="hljs-comment">// =&gt; [10, 30, 20, 70, 60, 50, 40, 80]</span></pre>
+    
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='indexof'>
+      indexOf
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Returns first index of a value matched, if it is not present, it returns -1.</p>
+
+    <div class='pre p1 fill-light mt0'>indexOf</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>value</span> <code class='quiet'>(any)</code>
+	    Any value to find.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>:
+        Returns index of given item.
+
+      
+    
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> tree = BTree.fromArray([<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>, <span class="hljs-number">40</span>, <span class="hljs-number">50</span>, <span class="hljs-number">60</span>, <span class="hljs-number">70</span>, <span class="hljs-number">80</span>]);
+tree.indexOf(<span class="hljs-number">30</span>); <span class="hljs-comment">// =&gt; 3</span>
+tree.indexOf(<span class="hljs-number">51</span>); <span class="hljs-comment">// =&gt; -1</span></pre>
+    
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='includes'>
+      includes
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Checks if given item exists or not, returns boolean.</p>
+
+    <div class='pre p1 fill-light mt0'>includes</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>value</span> <code class='quiet'>(any)</code>
+	    Any value to check if it exists or not.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        Returns true if it is present, otherwise false.
+
+      
+    
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> tree = BTree.fromArray([<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>, <span class="hljs-number">40</span>, <span class="hljs-number">50</span>, <span class="hljs-number">60</span>, <span class="hljs-number">70</span>, <span class="hljs-number">80</span>]);
+tree.includes(<span class="hljs-number">30</span>); <span class="hljs-comment">// true</span>
+tree.includes(<span class="hljs-number">51</span>); <span class="hljs-comment">// false</span></pre>
+    
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='exists'>
+      exists
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Checks if given item exists or not, returns boolean.</p>
+
+    <div class='pre p1 fill-light mt0'>exists</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>value</span> <code class='quiet'>(any)</code>
+	    Any value to check if it exists or not.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        Returns true if it is present, otherwise false.
+
+      
+    
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> tree = BTree.fromArray([<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>, <span class="hljs-number">40</span>, <span class="hljs-number">50</span>, <span class="hljs-number">60</span>, <span class="hljs-number">70</span>, <span class="hljs-number">80</span>]);
+tree.includes(<span class="hljs-number">30</span>); <span class="hljs-comment">// true</span>
+tree.includes(<span class="hljs-number">51</span>); <span class="hljs-comment">// false</span></pre>
+    
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='has'>
+      has
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Checks if given item exists or not, returns boolean.</p>
+
+    <div class='pre p1 fill-light mt0'>has</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>value</span> <code class='quiet'>(any)</code>
+	    Any value to check if it exists or not.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        Returns true if it is present, otherwise false.
+
+      
+    
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> tree = BTree.fromArray([<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>, <span class="hljs-number">40</span>, <span class="hljs-number">50</span>, <span class="hljs-number">60</span>, <span class="hljs-number">70</span>, <span class="hljs-number">80</span>]);
+tree.includes(<span class="hljs-number">30</span>); <span class="hljs-comment">// true</span>
+tree.includes(<span class="hljs-number">51</span>); <span class="hljs-comment">// false</span></pre>
     
   
 
