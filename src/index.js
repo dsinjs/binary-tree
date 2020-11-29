@@ -23,6 +23,14 @@ class UnreachableError extends Error {
   }
 }
 
+
+class FilteredRootError extends Error {
+  constructor(msg) {
+    super(msg);
+    this.name = "FilteredRootError";
+  }
+}
+
 /**
  * BTree main class
  * @class
@@ -252,7 +260,7 @@ class BTree {
    * @method findBFS
    * @member
    * @public
-   * @returns {undefined}
+   * @returns {undefined} no value.
    */
   findBFS(callback) {
     let currCount = 0;
@@ -261,6 +269,7 @@ class BTree {
     /**
      * 
      * @param {BTreeNode} currNode current node in recursion.
+     * @private
      */
     const recInser = (currNode, currPath) => {
       if (currNode != null) {
@@ -290,13 +299,14 @@ class BTree {
    * @method find
    * @member
    * @public
-   * @returns {undefined}
+   * @returns {undefined} no value.
    */
   find(callback) {
     /**
      * 
      * @param {BTreeNode} currNode Currently processing node.
      * @param {Array<'U'|'L'|'R'>} path current path
+     * @private
      */
     const recFnc = (currNode, path) => {
       if (currNode !== null) {
@@ -318,27 +328,27 @@ class BTree {
   }
 
   /**
-   * Depth first search, Executes given callback functions with parameters BTreeNode and path index for each node in DFS fashion.
+   * Breadth first search. Executes given callback functions with parameters BTreeNode and path index for each node in BFS fashion.
    * @param {Function} callback A callback function for execution of each node.
    * @method each
    * @member
    * @public
-   * @returns {undefined}
+   * @returns {undefined} no value.
    */
   each(callback) {
-    return this.find(callback);
+    return this.findBFS(callback);
   }
 
   /**
-   * Depth first search, Executes given callback functions with parameters BTreeNode and path index for each node in DFS fashion.
+   * Breadth first search. Executes given callback functions with parameters BTreeNode and path index for each node in BFS fashion.
    * @param {Function} callback A callback function for execution of each node.
-   * @method each
+   * @method forEach
    * @member
    * @public
-   * @returns {undefined}
+   * @returns {undefined} no value.
    */
   forEach(callback) {
-    return this.find(callback);
+    return this.findBFS(callback);
   }
 
   /**
@@ -358,6 +368,7 @@ class BTree {
     return {
       /**
        * @returns { {value: BTreeNode, done: boolean} }
+       * @private
        */
       next() {
         curr++;
@@ -387,6 +398,7 @@ class BTree {
 
   /**
    * Maps current tree values to a new tree with modifying the values using given callback function.
+   * Uses BFS.
    * @param {Function} callback callback function for value modifier.
    * @method map
    * @member
@@ -395,7 +407,7 @@ class BTree {
    * @example
    * var tree = BTree.fromArray([10, 20, 30, 40]);
    * var tree2 = tree.map(n => n * 2);
-   * var arr2 = tree2.toArray(); // [{value:20,...},{value:40,...},{value:80,...},{value:60,...}]
+   * var arr2 = tree2.toArray(); // [{value:20,...},{value:40,...},{value:60,...},{value:80,...}]
    */
   map(callback) {
     const newTree = new BTree(callback(this.root.value));
@@ -408,13 +420,80 @@ class BTree {
     return newTree;
   }
 
-  /* filter(callback) {
-
+  /**
+   * Filters each item based on given filter function
+   * @param {Function} filterFnc callback function for filtering purpose.
+   * @method filter
+   * @member
+   * @public
+   * @throws FilteredRootError, Error when root node gets filtered out.
+   * @returns {BTree} New filtered instance of tree.
+   * @example
+   * var tree = BTree.fromArray([10, 20, 30, 40]);
+   * var tree2 = tree.filter(n => !!(n % 4 === 0 || n === 10));
+   * var arr2 = tree2.toArray(); // [{value:10,...},{value:20,...},{value:40,...}]
+   */
+  filter(filterFnc) {
+    if (!filterFnc(this.root.value)) {
+      throw new FilteredRootError("Root node cannot be filtered. If you want to filter out root node, you can use emptry BTree instance.");
+    }
+    const newTree = new BTree(this.root.value);
+    this.each((node, index) => {
+      if (index !== 1) {
+        const canBeInserted = filterFnc(node.value);
+        if (canBeInserted) {
+          newTree.insertAt(node.value, index);
+        }
+      }
+    });
+    return newTree;
   }
 
-  reduce() {
+  /**
+   * Reduces each node values using reduceFunction and returns final value.
+   * @param {Function} reduceFunction callback function for reducing each node value to a final value.
+   * @param {number|any} initialValue Optional, Accumulator/Initial value.
+   * @method reduce
+   * @member
+   * @public
+   * @returns {any} Returns reduceed value
+   * @example
+   * var tree = BTree.fromArray([10, 20, 30, 40]);
+   * var sum = tree.reduce((acc, node) => acc + node); // => 100
+   */
+  reduce(reduceFunction, initialValue = 0) {
+    let next = initialValue;
+    this.each((node, index) => {
+      next = reduceFunction(next, node.value, index, this);
+    });
+    return next;
+  }
 
-  } */
+  /**
+   * Reverses the current Binary Tree, Left Node becomes Right node and vise versa.
+   * Does not return new instance, returns current tree instance.
+   * @method reverse
+   * @member
+   * @public
+   * @returns {BTree} Returns current tree instance.
+   * @example
+   * var tree = BTree.fromArray([10, 20, 30, 40, 50, 60, 70, 80]);
+   * tree.reverse().toArray(); // [10, 30, 20, 70, 60, 50, 40, 80]
+   */
+  reverse() {
+    const trav = (currNode, index) => {
+      if (currNode === null) {
+        return;
+      }
+      const temp = currNode.lNode;
+      currNode.lNode = currNode.rNode;
+      currNode.rNode = temp;
+      trav(currNode.lNode);
+      trav(currNode.rNode);
+    };
+    trav(this.root);
+    return this;
+  }
 
   /**
    * Returns index value from given path.

@@ -220,19 +220,66 @@ describe('@dsinjs/binary-tree', () => {
       done();
     });
 
-    it('map()', (done) => {
-      var tree = BTree.fromArray([10, 20, 30, 40]);
-      var tree2 = tree.map(n => n * 2);
-      var arr2 = tree2.toArray();
-      arr2.length.should.equal(4);
-      arr2[0].value.should.equal(20);
-      arr2[1].value.should.equal(40);
-      arr2[2].value.should.equal(80);
-      arr2[3].value.should.equal(60);
-      done();
+    describe('Extended Array functions', () => {
+      it('map()', (done) => {
+        var tree = BTree.fromArray([10, 20, 30, 40]);
+        var tree2 = tree.map(n => n * 2);
+        var arr2 = tree2.toArray();
+        arr2.length.should.equal(4);
+        arr2[0].value.should.equal(20);
+        arr2[1].value.should.equal(40);
+        arr2[2].value.should.equal(60);
+        arr2[3].value.should.equal(80);
+        done();
+      });
+
+      it('filter()', (done) => {
+        var tree = BTree.fromArray([10, 20, 30, 40]);
+        var tree2 = tree.filter(n => !!(n % 4 === 0 || n === 10));
+        var arr2 = tree2.toArray();
+        arr2.length.should.equal(3);
+        arr2[0].value.should.equal(10);
+        arr2[1].value.should.equal(20);
+        arr2[2].value.should.equal(40);
+
+        var tree3 = BTree.fromArray([2, 3, 4, 5]);
+        var tree4 = tree3.filter(n => !!(n % 2 === 0));
+        var arr4 = tree4.toArray();
+        arr4.length.should.equal(2);
+        arr4[0].value.should.equal(2);
+        arr4[1].value.should.equal(4);
+        done();
+      });
+
+      it('reduce()', (done) => {
+        var tree = BTree.fromArray([10, 20, 30, 40]);
+        var sum = tree.reduce((a, b) => a + b);
+        sum.should.equal(100);
+
+        var tree2 = BTree.fromArray([1, 2, 3, 4, 5]);
+        var sum2 = tree2.reduce((a, b) => a * b, 1);
+        sum2.should.equal(120);
+        done();
+      });
+
+      it('reverse()', (done) => {
+        var tree = BTree.fromArray([10, 20, 30, 40, 50, 60, 70, 80]);
+        tree.reverse();
+        var arr = tree.toArray();
+        arr[0].value.should.equal(10);
+        arr[1].value.should.equal(30);
+        arr[2].value.should.equal(20);
+        arr[3].value.should.equal(70);
+        arr[4].value.should.equal(60);
+        arr[5].value.should.equal(50);
+        arr[6].value.should.equal(40);
+        arr[7].value.should.equal(80);
+
+        done();
+      });
     });
 
-    it('Mix new, insert, insert, delete, toArray ', (done) => {
+    it('Mix 1 new, insert, insert, delete, toArray', (done) => {
       var tree = new BTree(10);
       tree.insert(20);
       tree.insert(30);
@@ -240,6 +287,17 @@ describe('@dsinjs/binary-tree', () => {
       var tarray = tree.toArray();
       tarray.length.should.equal(2);
       tarray[1].value.should.equal(20);
+      done();
+    });
+
+    it('Mix 2 fromArray toArray', (done) => {
+      var tree = BTree.fromArray([10, 20, 30, 40]);
+      var tarray = tree.toArray();
+      tarray.length.should.equal(4);
+      tarray[0].value.should.equal(10);
+      tarray[1].value.should.equal(20);
+      tarray[2].value.should.equal(30);
+      tarray[3].value.should.equal(40);
       done();
     });
   });

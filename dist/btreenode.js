@@ -14,7 +14,7 @@ var bTreeNodeStruct = {};
 
 /**
  * Binary Tree node class, contains 2 child nodes and single value.
- * @class
+ * @class BTreeNode
  * @public
  * @example
  * var node = new BTreeNode({ value: 15 });
@@ -36,7 +36,7 @@ var BTreeNode = function () {
     /**
      * @property value
      * Contains actual value
-     * @type {any}
+     * @type {T}
      * @public
      */
     this.value = attr.value || null;
