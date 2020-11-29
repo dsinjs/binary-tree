@@ -155,7 +155,7 @@ var BTreeNode = function () {
 }();
 
 if (typeof module != "undefined") {
-  module.exports = BTreeNode;
+  module.exports = { BTreeNode: BTreeNode };
 }
 if (typeof window != "undefined") {
   window.DSinJS = window.DSinJS || {};
@@ -176,7 +176,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var BTreeNode = require('./btreenode');
+var _require = require('./btreenode'),
+    BTreeNode = _require.BTreeNode;
 
 /**
  * @typedef {{ root: any }} BTreeRootAttrStruct
@@ -255,8 +256,9 @@ var BTree = function () {
 
   /**
    * Returns string value of given tree.
-   * @returns {string} Returns string value of given tree.
    * @method toString
+   * @member
+   * @public
    * @example
    * var tree = new BTree(10);
    * tree.insert(10);
@@ -275,6 +277,9 @@ var BTree = function () {
     /**
      * Returns JSON Form.
      * @method toJSON
+     * @member
+     * @public
+     * @returns {BTreeNodeStruct} Returns json form of a given tree.
      * @example
      * var tree = new BTree(10);
      * tree.insert(20);
@@ -288,10 +293,33 @@ var BTree = function () {
     }
 
     /**
+     * Returns array value.
+     * @method toArray
+     * @member
+     * @public
+     * @returns {Array<BTreeNode>} Returns array form of given tree.
+     * @example
+     * var tree = new BTree(10);
+     * tree.insert(20);
+     * tree.toArray(); // [{value:10,...},{value:20,...}]
+     */
+
+  }, {
+    key: "toArray",
+    value: function toArray() {
+      var arr = [];
+      this.each(function (node, index) {
+        arr.push(node);
+      });
+      return arr;
+    }
+
+    /**
      * Inserts the given value to the tree where first free left child node is found.
      * @param {any} val any type of value to be added to tree node.
      * @returns {BTreeNode} Returns newly created BTreeNode.
      * @method insert
+     * @member
      * @example
      * var tree = new BTree(10);
      * tree.insert(10);
@@ -309,8 +337,9 @@ var BTree = function () {
     /**
      * Inserts the given value to the tree where first free left child node is found.
      * @param {any} val any type of value to be added to tree node.
-     * @returns {BTreeNode} Returns newly created BTreeNode.
      * @method insertLeftMost
+     * @member
+     * @returns {BTreeNode} Returns newly created BTreeNode.
      */
 
   }, {
@@ -328,8 +357,10 @@ var BTree = function () {
     /**
      * Inserts the given value to the tree where first free right child node is found.
      * @param {any} val any type of value to be added to tree node.
-     * @returns {BTreeNode} Returns newly created BTreeNode.
      * @method insertRightMost
+     * @member
+     * @public
+     * @returns {BTreeNode} Returns newly created BTreeNode.
      */
 
   }, {
@@ -350,6 +381,7 @@ var BTree = function () {
      * @param {*} val Value to be removed.
      * @returns {BTreeNode} Returns removed BTreeNode.
      * @method delete
+     * @member
      * @public
      */
 
@@ -393,6 +425,7 @@ var BTree = function () {
      * @param {any} val value to insert.
      * @param {number} index index at which to append new element to.
      * @method insertAt
+     * @member
      * @public
      * @throws UnreachableError
      * @example
@@ -454,10 +487,11 @@ var BTree = function () {
 
     /**
      * Breadth first search. Executes given callback functions with parameters BTreeNode and path index for each node in BFS fashion.
-     * @param {Function} callback cb function for each execution.
+     * @param {Function} callback A callback function for execution of each node.
      * @method findBFS
+     * @member
      * @public
-     * @returns void 0
+     * @returns {undefined}
      */
 
   }, {
@@ -492,12 +526,160 @@ var BTree = function () {
     }
 
     /**
+     * Depth first search, Executes given callback functions with parameters BTreeNode and path index for each node in DFS fashion.
+     * @param {Function} callback A callback function for execution of each node.
+     * @method find
+     * @member
+     * @public
+     * @returns {undefined}
+     */
+
+  }, {
+    key: "find",
+    value: function find(callback) {
+      /**
+       * 
+       * @param {BTreeNode} currNode Currently processing node.
+       * @param {Array<'U'|'L'|'R'>} path current path
+       */
+      var recFnc = function recFnc(currNode, path) {
+        if (currNode !== null) {
+          callback(currNode, BTree.getIndexFromPath(path));
+          if (currNode.lNode !== null) {
+            var lPath = JSON.parse(JSON.stringify(path));
+            lPath.push('L');
+            recFnc(currNode.lNode, lPath);
+          }
+          if (currNode.rNode !== null) {
+            var rPath = JSON.parse(JSON.stringify(path));
+            rPath.push('R');
+            recFnc(currNode.rNode, rPath);
+          }
+        }
+      };
+
+      recFnc(this.root, ['U']);
+    }
+
+    /**
+     * Depth first search, Executes given callback functions with parameters BTreeNode and path index for each node in DFS fashion.
+     * @param {Function} callback A callback function for execution of each node.
+     * @method each
+     * @member
+     * @public
+     * @returns {undefined}
+     */
+
+  }, {
+    key: "each",
+    value: function each(callback) {
+      return this.find(callback);
+    }
+
+    /**
+     * Depth first search, Executes given callback functions with parameters BTreeNode and path index for each node in DFS fashion.
+     * @param {Function} callback A callback function for execution of each node.
+     * @method each
+     * @member
+     * @public
+     * @returns {undefined}
+     */
+
+  }, {
+    key: "forEach",
+    value: function forEach(callback) {
+      return this.find(callback);
+    }
+
+    /**
+     * Returns an iterable of key, value pairs for every entry in the tree.
+     * @method [Symbol.iterator]
+     * @member
+     * @public
+     * @example
+     * var tree = new BTree(10);
+     * for (const node of tree) {
+     *  console.log(node.value); // 10
+     * }
+     */
+
+  }, {
+    key: Symbol.iterator,
+    value: function value() {
+      var curr = -1;
+      var arr = this.toArray();
+      return {
+        /**
+         * @returns { {value: BTreeNode, done: boolean} }
+         */
+        next: function next() {
+          curr++;
+          return {
+            value: arr[curr] === void 0 ? void 0 : arr[curr],
+            done: !!(curr === arr.length)
+          };
+        }
+      };
+    }
+
+    /**
+     * Returns an iterable of key, value pairs for every entry in the tree.
+     * @method entries
+     * @member
+     * @public
+     * @returns {IterableIterator<[number, BTreeNode]>} Iterable for iterations.
+     * @example
+     * var tree = new BTree(10);
+     * for (const [index, node] of tree.entries()) {
+     *  console.log(index, node.value); // 0, 10
+     * }
+     */
+
+  }, {
+    key: "entries",
+    value: function entries() {
+      return this.toArray().entries();
+    }
+
+    /**
+     * Maps current tree values to a new tree with modifying the values using given callback function.
+     * @param {Function} callback callback function for value modifier.
+     * @method map
+     * @member
+     * @public
+     * @returns {BTree} A new BTree
+     * @example
+     * var tree = BTree.fromArray([10, 20, 30, 40]);
+     * var tree2 = tree.map(n => n * 2);
+     * var arr2 = tree2.toArray(); // [{value:20,...},{value:40,...},{value:80,...},{value:60,...}]
+     */
+
+  }, {
+    key: "map",
+    value: function map(callback) {
+      var newTree = new BTree(callback(this.root.value));
+      this.each(function (node, index) {
+        if (index !== 1) {
+          var retVal = callback(node.value);
+          newTree.insertAt(retVal, index);
+        }
+      });
+      return newTree;
+    }
+
+    /* filter(callback) {
+      }
+      reduce() {
+      } */
+
+    /**
      * Returns index value from given path.
      * @param {Array<'U'|'L'|'R'>} path Array for U L or R, which represents the quickest path to get to a node.
      * @returns {number} Returns index value.
      * @method getIndexFromPath
      * @public
      * @static
+     * @member
      */
 
   }], [{
@@ -525,8 +707,8 @@ var BTree = function () {
      * @param {number} index Index number from which path to be calculated.
      * @returns {Array<'U'|'L'|'R'>} Path equivalent to the given index.
      * @method getPathFromIndex
-     * @static
      * @public
+     * @static
      */
 
   }, {

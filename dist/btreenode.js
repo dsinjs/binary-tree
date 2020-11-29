@@ -154,7 +154,7 @@ var BTreeNode = function () {
 }();
 
 if (typeof module != "undefined") {
-  module.exports = BTreeNode;
+  module.exports = { BTreeNode: BTreeNode };
 }
 if (typeof window != "undefined") {
   window.DSinJS = window.DSinJS || {};

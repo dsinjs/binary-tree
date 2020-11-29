@@ -25,13 +25,22 @@ var node = new BTreeNode({ value: 10 });
 var nodel = new BTreeNode({ value: 15, lNode: node });
 ```
 ```
-var tree1 = new BTree({ value: 10 });
-var tree2 = new BTree({ root: 10 });
-var tree3 = new BTree(10);
+var tree = new BTree(10);
+tree.insert(20);
+tree.insert(30);
+tree.delete(30);
+tree.toArray(); // [{value:10,...},{value:20,...}]
+```
+```
+for (const node of tree) {
+    console.log(node.value); // 10, 20
+}
 ```
 ## All Features:
 - All Binary Tree data structure functionality.
-- extra functions like toString(), toJSON(), validate() etc.
+- Main functions like insert(), delete(), each(), find() etc.
+- Extended functions like entries(), Symbol.iterator, supports `for...of` loops.
+- Conversion methods like fromArray(), toArray(), toString(), toJSON().
 
 ## Complete Documentation
 Checkout [DOCUMENTATION.md](DOCUMENTATION.md) for complete documentation or View Documentation online at [https://dsinjs.github.io/binary-tree/](https://dsinjs.github.io/binary-tree/)

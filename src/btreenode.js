@@ -127,7 +127,7 @@ class BTreeNode {
 }
 
 if (typeof module != "undefined") {
-  module.exports = BTreeNode;
+  module.exports = { BTreeNode };
 }
 if (typeof window != "undefined") {
   window.DSinJS = window.DSinJS || {};
