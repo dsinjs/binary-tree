@@ -2,18 +2,18 @@ import { BTreeNode } from "./btreenode";
 
 declare let module: any;
 
-export class ExtendedWindow extends Window {
-  DSinJS!: {
+export declare class ExtendedWindow extends Window {
+  DSinJS: {
     BTreeNode: typeof BTreeNode;
     BTree: typeof BTree;
   };
-  BTreeNode!: typeof BTreeNode;
-  BTree!: typeof BTree;
+  BTreeNode: typeof BTreeNode;
+  BTree: typeof BTree;
 }
 
 declare let window: ExtendedWindow;
 
-export class BTreeNodeStruct<T> {
+export declare class BTreeNodeStruct<T> {
   value?: T | null;
   lNode?: BTreeNodeStruct<T> | null;
   rNode?: BTreeNodeStruct<T> | null;
@@ -43,12 +43,13 @@ class FilteredRootError extends Error {
 }
 
 // if Symbol is not available in window
-/* if (typeof window !== "undefined") {
+if (typeof window !== "undefined") {
   if (typeof Symbol === "undefined") {
-    window.Symbol = {};
-    window.Symbol.iterator = "==iterator==";
+    let win: any = window;
+    win.Symbol = {};
+    win.Symbol.iterator = "==iterator==";
   }
-} */
+}
 
 /**
  * BTree main class

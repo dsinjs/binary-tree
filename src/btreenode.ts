@@ -1,15 +1,15 @@
 declare let module: any;
 
-export class ExtendedWindow extends Window {
-  DSinJS!: {
+export declare class ExtendedWindow extends Window {
+  DSinJS: {
     BTreeNode: typeof BTreeNode;
   };
-  BTreeNode!: typeof BTreeNode;
+  BTreeNode: typeof BTreeNode;
 }
 
 declare let window: ExtendedWindow;
 
-export class BTreeNodeStruct<T> {
+export declare class BTreeNodeStruct<T> {
   value?: T | null;
   lNode?: BTreeNodeStruct<T> | null;
   rNode?: BTreeNodeStruct<T> | null;
@@ -55,16 +55,16 @@ export class BTreeNode<T = any> {
   constructor(attr: BTreeNodeStruct<T>) {
     this.value = attr.value || null;
 
-    this.lNode = null;
+    this.lNode = attr.lNode as BTreeNode<T> || null;
 
-    if (!attr.lNode as any instanceof BTreeNode && attr.lNode !== void 0 && attr.lNode !== null) {
-      this.lNode = new BTreeNode(attr.lNode);
+    if (!this.lNode as any instanceof BTreeNode) {
+      this.lNode = new BTreeNode(this.lNode as BTreeNodeStruct<T>);
     }
 
-    this.rNode = null;
+    this.rNode = attr.rNode as BTreeNode<T> || null;
 
-    if (!this.rNode as any instanceof BTreeNode && attr.rNode !== void 0 && attr.rNode !== null) {
-      this.rNode = new BTreeNode(attr.rNode);
+    if (!this.rNode as any instanceof BTreeNode) {
+      this.rNode = new BTreeNode(this.rNode as BTreeNodeStruct<T>);
     }
 
     if (!this.validate()) {
@@ -81,7 +81,7 @@ export class BTreeNode<T = any> {
    * var node = new BTreeNode({ value: 10 });
    * console.log(node.validate()); // true
    */
-  validate() {
+  validate(): boolean {
     return (this.value != void 0 || this.value != null);
   }
 
@@ -113,7 +113,7 @@ export class BTreeNode<T = any> {
    * var lNode = new BTreeNode({ value: 15, lNode: node });
    * console.log(node.toString()); // "1015"
    */
-  toString() {
+  toString(): string {
     const anyVar: any = this.value;
     const leftStr: string = (this.lNode === null) ? "" : this.lNode.toString();
     const rightStr: string = (this.rNode === null) ? "" : this.rNode.toString();
@@ -133,7 +133,7 @@ export class BTreeNode<T = any> {
    * var l2Node = new BTreeNode({ value: 15, lNode: lNode });
    * console.log(l2Node.getDepth()); // 3
    */
-  getDepth() {
+  getDepth(): number {
     const leftDepth: number = (this.lNode === null) ? 1 : this.lNode.getDepth() + 1;
     const rightDepth: number = (this.rNode === null) ? 1 : this.rNode.getDepth() + 1;
 

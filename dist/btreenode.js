@@ -1,33 +1,6 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BTreeNode = exports.BTreeNodeStruct = exports.ExtendedWindow = void 0;
-var ExtendedWindow = /** @class */ (function (_super) {
-    __extends(ExtendedWindow, _super);
-    function ExtendedWindow() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    return ExtendedWindow;
-}(Window));
-exports.ExtendedWindow = ExtendedWindow;
-var BTreeNodeStruct = /** @class */ (function () {
-    function BTreeNodeStruct() {
-    }
-    return BTreeNodeStruct;
-}());
-exports.BTreeNodeStruct = BTreeNodeStruct;
+exports.BTreeNode = void 0;
 /**
  * Binary Tree node class, contains 2 child nodes and single value.
  * @class BTreeNode
@@ -45,13 +18,13 @@ var BTreeNode = /** @class */ (function () {
      */
     function BTreeNode(attr) {
         this.value = attr.value || null;
-        this.lNode = null;
-        if (!attr.lNode instanceof BTreeNode && attr.lNode !== void 0 && attr.lNode !== null) {
-            this.lNode = new BTreeNode(attr.lNode);
+        this.lNode = attr.lNode || null;
+        if (!this.lNode instanceof BTreeNode) {
+            this.lNode = new BTreeNode(this.lNode);
         }
-        this.rNode = null;
-        if (!this.rNode instanceof BTreeNode && attr.rNode !== void 0 && attr.rNode !== null) {
-            this.rNode = new BTreeNode(attr.rNode);
+        this.rNode = attr.rNode || null;
+        if (!this.rNode instanceof BTreeNode) {
+            this.rNode = new BTreeNode(this.rNode);
         }
         if (!this.validate()) {
             throw new Error("A BTree node must have a valid value, cannot be null or undefined");

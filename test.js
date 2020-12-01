@@ -1,6 +1,6 @@
 const should = require('should');
 const assert = require('assert');
-const { BTreeNode, BTree } = require('./src/index');
+const { BTreeNode, BTree } = require('./dist/index');
 
 describe('@dsinjs/binary-tree', () => {
   describe('BTreeNode', () => {
