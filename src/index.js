@@ -111,12 +111,31 @@ class BTree {
    * @example
    * var tree = new BTree(10);
    * tree.insert(20);
-   * tree.toArray(); // [{value:10,...},{value:20,...}]
+   * tree.toArray(); // => [{value:10,...},{value:20,...}]
    */
   toArray() {
     const arr = [];
     this.each((node, index) => {
       arr.push(node);
+    });
+    return arr;
+  }
+
+  /**
+   * Returns array of values of the tree.
+   * @method toFlatArray
+   * @member
+   * @public
+   * @returns {Array<any>} Returns array form of given tree.
+   * @example
+   * var tree = new BTree(10);
+   * tree.insert(20);
+   * tree.toFlatArray(); // => [10,20]
+   */
+  toFlatArray() {
+    const arr = [];
+    this.each((node, index) => {
+      arr.push(node.value);
     });
     return arr;
   }
@@ -257,12 +276,12 @@ class BTree {
   /**
    * Breadth first search. Executes given callback functions with parameters BTreeNode and path index for each node in BFS fashion.
    * @param {Function} callback A callback function for execution of each node.
-   * @method findBFS
+   * @method traverseBFS
    * @member
    * @public
    * @returns {undefined} no value.
    */
-  findBFS(callback) {
+  traverseBFS(callback) {
     let currCount = 0;
     const children = [];
 
@@ -296,12 +315,12 @@ class BTree {
   /**
    * Depth first search, Executes given callback functions with parameters BTreeNode and path index for each node in DFS fashion.
    * @param {Function} callback A callback function for execution of each node.
-   * @method find
+   * @method traverseDFS
    * @member
    * @public
    * @returns {undefined} no value.
    */
-  find(callback) {
+  traverseDFS(callback) {
     /**
      * 
      * @param {BTreeNode} currNode Currently processing node.
@@ -336,7 +355,7 @@ class BTree {
    * @returns {undefined} no value.
    */
   each(callback) {
-    return this.findBFS(callback);
+    return this.traverseBFS(callback);
   }
 
   /**
@@ -348,7 +367,7 @@ class BTree {
    * @returns {undefined} no value.
    */
   forEach(callback) {
-    return this.findBFS(callback);
+    return this.traverseBFS(callback);
   }
 
   /**
@@ -543,8 +562,8 @@ class BTree {
    * @returns {boolean} Returns true if it is present, otherwise false.
    * @example
    * var tree = BTree.fromArray([10, 20, 30, 40, 50, 60, 70, 80]);
-   * tree.includes(30); // true
-   * tree.includes(51); // false
+   * tree.exists(30); // true
+   * tree.exists(51); // false
    */
   exists(value) {
     return this.indexOf(value) !== -1;
@@ -559,11 +578,128 @@ class BTree {
    * @returns {boolean} Returns true if it is present, otherwise false.
    * @example
    * var tree = BTree.fromArray([10, 20, 30, 40, 50, 60, 70, 80]);
-   * tree.includes(30); // true
-   * tree.includes(51); // false
+   * tree.has(30); // true
+   * tree.has(51); // false
    */
   has(value) {
     return this.indexOf(value) !== -1;
+  }
+
+  /**
+   * Sorts the tree based on compare function, Has option to sort only at children level.
+   * @param {Function} compareFnc Function used to determine the order of the elements. It is expected to return
+   * a negative value if first argument is less than second argument, zero if they're equal and a positive
+   * value otherwise. If omitted, the elements are sorted in ascending, ASCII character order.
+   * ```ts
+   * (a, b) => a - b)
+   * ```
+   * @param {boolean} atOnlyFirstChildLevel Optiona, Flag to specify if first child of each node should sorted. Default is `false`.
+   * @method sort
+   * @member
+   * @public
+   * @returns {undefined} Returns undefined.
+   * @example
+   * var tree = BTree.fromArray([10, 200, 100, 50, 60, 90, 5, 3]);
+   * tree.sort().toFlatArray(); // => [3,5,10,50,60,90,100,200]
+   */
+  sort(compareFnc = (a = 0, b = 0) => { return (a < b) ? -1 : (a == b) ? 0 : 1; }, atOnlyFirstChildLevel = false) {
+    if (atOnlyFirstChildLevel) {
+      const DFS = (node) => {
+        if (node !== null) {
+          const out = compareFnc(node.lNode, node.rNode);
+          if (out > 0) {
+            const temp = node.lNode;
+            node.lNode = node.rNode;
+            node.rNode = temp;
+          }
+          DFS(node.lNode);
+          DFS(node.rNode);
+        }
+      };
+      DFS(this.root);
+    } else {
+      const arr = [];
+      const arrBFS = [];
+      let counter = 0;
+      const children = [];
+      const BFS = (node) => {
+
+        if (node !== null && node.lNode !== null) {
+          children.push(node.lNode);
+        }
+        if (node !== null && node.rNode !== null) {
+          children.push(node.rNode);
+        }
+        if (node !== null) {
+          arrBFS.push(node);
+          arr.push(node.value);
+        }
+
+        if (children.length !== 0) {
+          const first = children[0];
+          children.splice(0, 1);
+          BFS(first);
+        }
+      };
+      BFS(this.root);
+
+      while (arr.length !== 0) {
+        let min = arr[0];
+        let minIndex = 0;
+        for (let i = 1; i < arr.length; i++) {
+          const out = compareFnc(min, arr[i]);
+          if (out > 0) {
+            min = arr[i];
+            minIndex = i;
+          }
+        }
+        arrBFS[counter].value = min;
+        arr.splice(minIndex, 1);
+        counter++;
+      }
+    }
+  }
+
+  /**
+   * Prints entire tree on the console, useful for logging and checking status.
+   * @method print
+   * @member
+   * @public
+   * @returns {undefined} Returns undefined.
+   * @example
+   * var tree = BTree.fromArray([1, 2, 3]);
+   * tree.print();
+   * 1 (1)
+   * |- 2 (2)
+   * |- 3 (3)
+   */
+  print() {
+    let isit = false;
+    this.traverseDFS((node, index) => {
+      const len = BTree.getPathFromIndex(index).length;
+      const isFirst = (isit) ? " |-".repeat(len - 1) : "";
+      console.log(isFirst, node.value, "(" + index + ")");
+      isit = true;
+    });
+  }
+
+  /**
+   * Returns the first matched tree node. Traverses using BFS.
+   * @param {any} item any value to find inside the tree.
+   * @method find
+   * @member
+   * @public
+   * @returns {BTreeNode} Returns the first matched tree node, if not found, returns null.
+   * @example
+   */
+  find(item) {
+    let retNode = null;
+    this.each((node, index) => {
+      if (node.value === item && retNode === null) {
+        retNode = node;
+      }
+    });
+    return retNode;
   }
 
   /**

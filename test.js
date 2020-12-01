@@ -138,10 +138,27 @@ describe('@dsinjs/binary-tree', () => {
         tree.depth.should.equal(3);
         done();
       });
+      it('sort()', (done) => {
+        var correctMatrix = { 1: 3, 2: 5, 3: 10, 4: 50, 5: 60, 6: 90, 7: 100, 8: 200 };
+        var tree = BTree.fromArray([10, 200, 100, 50, 60, 90, 5, 3]);
+        tree.sort();
+        tree.each((node, index) => {
+          node.value.should.equal(correctMatrix[index]);
+        });
+
+        var correctMatrix2 = { 1: 10, 2: 100, 3: 200, 4: 5, 5: 90, 6: 50, 7: 60, 13: 3 };
+        var tree2 = BTree.fromArray([10, 200, 100, 50, 60, 90, 5, 3]);
+        tree2.sort(void 0, true);
+        tree2.each((node, index) => {
+          node.value.should.equal(correctMatrix2[index]);
+        });
+
+        done();
+      });
     });
 
-    describe('Find Functions', () => {
-      it('findBFS()', (done) => {
+    describe('Traversal Functions', () => {
+      it('traverseBFS()', (done) => {
         var tree = new BTree(10);
         tree.insertRightMost(20);
         tree.insertRightMost(30);
@@ -152,10 +169,13 @@ describe('@dsinjs/binary-tree', () => {
         tree.insertRightMost(80);
         tree.insertLeftMost(90);
         tree.insertRightMost(100);
-        tree.findBFS((node, index) => { });
+
+        // var correctMatrix = {1:10,2:40,20,};
+
+        tree.traverseBFS((node, index) => { });
         done();
       });
-      it('find()', (done) => {
+      it('traverseDFS()', (done) => {
         var tree = new BTree(10);
         tree.insertLeftMost(20);
         tree.insertRightMost(30);
@@ -166,7 +186,28 @@ describe('@dsinjs/binary-tree', () => {
         tree.insertLeftMost(80);
         tree.insertRightMost(90);
         tree.insertLeftMost(100);
-        tree.find((node, index) => { });
+        tree.traverseDFS((node, index) => { });
+        done();
+      });
+
+      it('print()', (done) => {
+        var tree = BTree.fromArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+        tree.print();
+
+        done();
+      });
+
+      it('find()', (done) => {
+        var tree = BTree.fromArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+        var node = tree.find(11);
+        node.value.should.equal(11);
+
+        var tree2 = BTree.fromArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]);
+        var node2 = tree2.find(19);
+        node2.value.should.equal(19);
+        
+        var node3 = tree2.find(3);
+        node3.lNode.value.should.equal(6);
         done();
       });
     });

@@ -152,7 +152,7 @@ var BTree = function () {
      * @example
      * var tree = new BTree(10);
      * tree.insert(20);
-     * tree.toArray(); // [{value:10,...},{value:20,...}]
+     * tree.toArray(); // => [{value:10,...},{value:20,...}]
      */
 
   }, {
@@ -161,6 +161,28 @@ var BTree = function () {
       var arr = [];
       this.each(function (node, index) {
         arr.push(node);
+      });
+      return arr;
+    }
+
+    /**
+     * Returns array of values of the tree.
+     * @method toFlatArray
+     * @member
+     * @public
+     * @returns {Array<any>} Returns array form of given tree.
+     * @example
+     * var tree = new BTree(10);
+     * tree.insert(20);
+     * tree.toFlatArray(); // => [10,20]
+     */
+
+  }, {
+    key: "toFlatArray",
+    value: function toFlatArray() {
+      var arr = [];
+      this.each(function (node, index) {
+        arr.push(node.value);
       });
       return arr;
     }
@@ -339,15 +361,15 @@ var BTree = function () {
     /**
      * Breadth first search. Executes given callback functions with parameters BTreeNode and path index for each node in BFS fashion.
      * @param {Function} callback A callback function for execution of each node.
-     * @method findBFS
+     * @method traverseBFS
      * @member
      * @public
      * @returns {undefined} no value.
      */
 
   }, {
-    key: "findBFS",
-    value: function findBFS(callback) {
+    key: "traverseBFS",
+    value: function traverseBFS(callback) {
       var currCount = 0;
       var children = [];
 
@@ -380,15 +402,15 @@ var BTree = function () {
     /**
      * Depth first search, Executes given callback functions with parameters BTreeNode and path index for each node in DFS fashion.
      * @param {Function} callback A callback function for execution of each node.
-     * @method find
+     * @method traverseDFS
      * @member
      * @public
      * @returns {undefined} no value.
      */
 
   }, {
-    key: "find",
-    value: function find(callback) {
+    key: "traverseDFS",
+    value: function traverseDFS(callback) {
       /**
        * 
        * @param {BTreeNode} currNode Currently processing node.
@@ -426,7 +448,7 @@ var BTree = function () {
   }, {
     key: "each",
     value: function each(callback) {
-      return this.findBFS(callback);
+      return this.traverseBFS(callback);
     }
 
     /**
@@ -441,7 +463,7 @@ var BTree = function () {
   }, {
     key: "forEach",
     value: function forEach(callback) {
-      return this.findBFS(callback);
+      return this.traverseBFS(callback);
     }
 
     /**
@@ -664,8 +686,8 @@ var BTree = function () {
      * @returns {boolean} Returns true if it is present, otherwise false.
      * @example
      * var tree = BTree.fromArray([10, 20, 30, 40, 50, 60, 70, 80]);
-     * tree.includes(30); // true
-     * tree.includes(51); // false
+     * tree.exists(30); // true
+     * tree.exists(51); // false
      */
 
   }, {
@@ -683,14 +705,147 @@ var BTree = function () {
      * @returns {boolean} Returns true if it is present, otherwise false.
      * @example
      * var tree = BTree.fromArray([10, 20, 30, 40, 50, 60, 70, 80]);
-     * tree.includes(30); // true
-     * tree.includes(51); // false
+     * tree.has(30); // true
+     * tree.has(51); // false
      */
 
   }, {
     key: "has",
     value: function has(value) {
       return this.indexOf(value) !== -1;
+    }
+
+    /**
+     * Sorts the tree based on compare function, Has option to sort only at children level.
+     * @param {Function} compareFnc Function used to determine the order of the elements. It is expected to return
+     * a negative value if first argument is less than second argument, zero if they're equal and a positive
+     * value otherwise. If omitted, the elements are sorted in ascending, ASCII character order.
+     * ```ts
+     * (a, b) => a - b)
+     * ```
+     * @param {boolean} atOnlyFirstChildLevel Optiona, Flag to specify if first child of each node should sorted. Default is `false`.
+     * @method sort
+     * @member
+     * @public
+     * @returns {undefined} Returns undefined.
+     * @example
+     * var tree = BTree.fromArray([10, 200, 100, 50, 60, 90, 5, 3]);
+     * tree.sort().toFlatArray(); // => [3,5,10,50,60,90,100,200]
+     */
+
+  }, {
+    key: "sort",
+    value: function sort() {
+      var compareFnc = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {
+        var a = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+        var b = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+        return a < b ? -1 : a == b ? 0 : 1;
+      };
+      var atOnlyFirstChildLevel = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+      if (atOnlyFirstChildLevel) {
+        var DFS = function DFS(node) {
+          if (node !== null) {
+            var out = compareFnc(node.lNode, node.rNode);
+            if (out > 0) {
+              var temp = node.lNode;
+              node.lNode = node.rNode;
+              node.rNode = temp;
+            }
+            DFS(node.lNode);
+            DFS(node.rNode);
+          }
+        };
+        DFS(this.root);
+      } else {
+        var arr = [];
+        var arrBFS = [];
+        var counter = 0;
+        var children = [];
+        var BFS = function BFS(node) {
+
+          if (node !== null && node.lNode !== null) {
+            children.push(node.lNode);
+          }
+          if (node !== null && node.rNode !== null) {
+            children.push(node.rNode);
+          }
+          if (node !== null) {
+            arrBFS.push(node);
+            arr.push(node.value);
+          }
+
+          if (children.length !== 0) {
+            var first = children[0];
+            children.splice(0, 1);
+            BFS(first);
+          }
+        };
+        BFS(this.root);
+
+        while (arr.length !== 0) {
+          var min = arr[0];
+          var minIndex = 0;
+          for (var i = 1; i < arr.length; i++) {
+            var out = compareFnc(min, arr[i]);
+            if (out > 0) {
+              min = arr[i];
+              minIndex = i;
+            }
+          }
+          arrBFS[counter].value = min;
+          arr.splice(minIndex, 1);
+          counter++;
+        }
+      }
+    }
+
+    /**
+     * Prints entire tree on the console, useful for logging and checking status.
+     * @method print
+     * @member
+     * @public
+     * @returns {undefined} Returns undefined.
+     * @example
+     * var tree = BTree.fromArray([1, 2, 3]);
+     * tree.print();
+     * 1 (1)
+     * |- 2 (2)
+     * |- 3 (3)
+     */
+
+  }, {
+    key: "print",
+    value: function print() {
+      var isit = false;
+      this.traverseDFS(function (node, index) {
+        var len = BTree.getPathFromIndex(index).length;
+        var isFirst = isit ? " |-".repeat(len - 1) : "";
+        console.log(isFirst, node.value, "(" + index + ")");
+        isit = true;
+      });
+    }
+
+    /**
+     * Returns the first matched tree node. Traverses using BFS.
+     * @param {any} item any value to find inside the tree.
+     * @method find
+     * @member
+     * @public
+     * @returns {BTreeNode} Returns the first matched tree node, if not found, returns null.
+     * @example
+     */
+
+  }, {
+    key: "find",
+    value: function find(item) {
+      var retNode = null;
+      this.each(function (node, index) {
+        if (node.value === item && retNode === null) {
+          retNode = node;
+        }
+      });
+      return retNode;
     }
 
     /**

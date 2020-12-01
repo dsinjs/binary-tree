@@ -55,7 +55,7 @@ for (const node of tree) {
 ## All Features:
 - All Binary Tree data structure functionality.
 - 25+ Binary Tree functions.
-- Main functions like insert(), delete(), each(), find() etc.
+- Main functions like insert(), delete(), each(), find(), sort() etc.
 - Extended functions like entries(), Symbol.iterator, supports `for...of` loops.
 - Conversion methods like fromArray(), toArray(), toString(), toJSON().
 
