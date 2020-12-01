@@ -225,6 +225,16 @@ var FilteredRootError = function (_Error2) {
   return FilteredRootError;
 }(Error);
 
+// if Symbol is not available in window
+
+
+if (typeof window !== "undefined") {
+  if (typeof Symbol === "undefined") {
+    window.Symbol = {};
+    window.Symbol.iterator = "==iterator==";
+  }
+}
+
 /**
  * BTree main class
  * @class
@@ -234,7 +244,6 @@ var FilteredRootError = function (_Error2) {
  * new BTree({ root: 10 });
  * new BTree({ value: 10 });
  */
-
 
 var BTree = function () {
   /**

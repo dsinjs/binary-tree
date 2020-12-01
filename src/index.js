@@ -31,6 +31,14 @@ class FilteredRootError extends Error {
   }
 }
 
+// if Symbol is not available in window
+if (typeof window !== "undefined") {
+  if (typeof Symbol === "undefined") {
+    window.Symbol = {};
+    window.Symbol.iterator = "==iterator==";
+  }
+}
+
 /**
  * BTree main class
  * @class
