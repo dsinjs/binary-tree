@@ -1,4 +1,5 @@
-const { BTree, BTreeNode } = require("./btree");
+import { BTreeNode } from "./btreenode";
+import { BTree } from "./btree";
 
 declare let module: any;
 

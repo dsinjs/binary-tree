@@ -6,6 +6,7 @@
   "scripts": {
     "test": "mocha",
     "build": "npm run babel && npm run browserify && npm run uglifyjs",
+    "buildts": "tsc",
     "babel": "babel src -d dist",
     "browserify": "browserify dist/index.js -o dist/dsinjs-binarytree.js",
     "uglifyjs": "uglifyjs --compress --mangle --output dist/dsinjs-binarytree.min.js -- dist/dsinjs-binarytree.js",
