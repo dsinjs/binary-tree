@@ -1,9 +1,9 @@
 {
   "name": "@dsinjs/binary-tree",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Binary Trees for your DS in JS",
   "main": "dist/index.js",
-  "types": "dist/btree.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "mocha",
     "build": "npm run buildts && npm run browserify && npm run uglifyjs",

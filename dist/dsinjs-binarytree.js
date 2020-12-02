@@ -926,9 +926,8 @@ if (typeof window != "undefined") {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var btreenode_1 = require("./btreenode");
+Object.defineProperty(exports, "BTreeNode", { enumerable: true, get: function () { return btreenode_1.BTreeNode; } });
 var btree_1 = require("./btree");
-if (typeof module != "undefined") {
-    module.exports = { BTree: btree_1.BTree, BTreeNode: btreenode_1.BTreeNode };
-}
+Object.defineProperty(exports, "BTree", { enumerable: true, get: function () { return btree_1.BTree; } });
 
 },{"./btree":1,"./btreenode":2}]},{},[3]);
