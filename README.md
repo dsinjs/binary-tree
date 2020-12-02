@@ -61,7 +61,7 @@ for (const node of tree) {
 
 ## Complete Documentation
 Checkout [DOCUMENTATION.md](DOCUMENTATION.md) for complete documentation or View Documentation online at [https://dsinjs.github.io/binary-tree/](https://dsinjs.github.io/binary-tree/)
-
+> Note: May need to use polyfills for Array.entries(), to make BTree work in older browsers like IE11.
 
 ## Help us expand
 Let me know in issues/github page or on email which javascript functions to include in next release.

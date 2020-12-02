@@ -5,90 +5,80 @@
 -   [BTree][1]
     -   [Parameters][2]
     -   [Examples][3]
-    -   [root][4]
-    -   [depth][5]
-    -   [iterator][6]
-        -   [Examples][7]
--   [toString][8]
-    -   [Examples][9]
--   [toJSON][10]
+    -   [depth][4]
+    -   [iterator][5]
+        -   [Examples][6]
+    -   [reduce][7]
+        -   [Parameters][8]
+        -   [Examples][9]
+-   [toString][10]
     -   [Examples][11]
--   [toArray][12]
+-   [toJSON][12]
     -   [Examples][13]
--   [toFlatArray][14]
+-   [toArray][14]
     -   [Examples][15]
--   [insert][16]
-    -   [Parameters][17]
-    -   [Examples][18]
--   [insertLeftMost][19]
-    -   [Parameters][20]
--   [insertRightMost][21]
+-   [toFlatArray][16]
+    -   [Examples][17]
+-   [insert][18]
+    -   [Parameters][19]
+    -   [Examples][20]
+-   [insertLeftMost][21]
     -   [Parameters][22]
--   [delete][23]
+-   [insertRightMost][23]
     -   [Parameters][24]
--   [insertAt][25]
+-   [delete][25]
     -   [Parameters][26]
-    -   [Examples][27]
--   [traverseBFS][28]
-    -   [Parameters][29]
--   [traverseDFS][30]
-    -   [Parameters][31]
+-   [insertAt][27]
+    -   [Parameters][28]
+    -   [Examples][29]
+-   [traverseBFS][30]
+-   [traverseDFS][31]
 -   [each][32]
-    -   [Parameters][33]
--   [forEach][34]
-    -   [Parameters][35]
--   [entries][36]
+-   [forEach][33]
+-   [entries][34]
+    -   [Examples][35]
+-   [map][36]
     -   [Examples][37]
--   [map][38]
-    -   [Parameters][39]
-    -   [Examples][40]
--   [filter][41]
-    -   [Parameters][42]
-    -   [Examples][43]
--   [reduce][44]
-    -   [Parameters][45]
-    -   [Examples][46]
--   [reverse][47]
-    -   [Examples][48]
--   [indexOf][49]
-    -   [Parameters][50]
-    -   [Examples][51]
--   [includes][52]
-    -   [Parameters][53]
-    -   [Examples][54]
--   [exists][55]
-    -   [Parameters][56]
-    -   [Examples][57]
--   [has][58]
-    -   [Parameters][59]
-    -   [Examples][60]
--   [sort][61]
+-   [filter][38]
+    -   [Examples][39]
+-   [reverse][40]
+    -   [Examples][41]
+-   [indexOf][42]
+    -   [Parameters][43]
+    -   [Examples][44]
+-   [includes][45]
+    -   [Parameters][46]
+    -   [Examples][47]
+-   [exists][48]
+    -   [Parameters][49]
+    -   [Examples][50]
+-   [has][51]
+    -   [Parameters][52]
+    -   [Examples][53]
+-   [sort][54]
+    -   [Parameters][55]
+    -   [Examples][56]
+-   [print][57]
+    -   [Examples][58]
+-   [find][59]
+    -   [Parameters][60]
+-   [getIndexFromPath][61]
     -   [Parameters][62]
-    -   [Examples][63]
--   [print][64]
-    -   [Examples][65]
--   [find][66]
-    -   [Parameters][67]
--   [getIndexFromPath][68]
-    -   [Parameters][69]
--   [getPathFromIndex][70]
-    -   [Parameters][71]
--   [fromArray][72]
-    -   [Parameters][73]
-    -   [Examples][74]
--   [BTreeNode][75]
-    -   [Examples][76]
-    -   [value][77]
-    -   [lNode][78]
-    -   [rNode][79]
-    -   [validate][80]
-        -   [Examples][81]
-    -   [toJSON][82]
-        -   [Examples][83]
-    -   [toString][84]
-        -   [Examples][85]
-    -   [getDepth][86]
-        -   [Examples][87]
+-   [getPathFromIndex][63]
+    -   [Parameters][64]
+-   [fromArray][65]
+    -   [Parameters][66]
+    -   [Examples][67]
+-   [BTreeNode][68]
+    -   [Examples][69]
+    -   [validate][70]
+        -   [Examples][71]
+    -   [toJSON][72]
+        -   [Examples][73]
+    -   [toString][74]
+        -   [Examples][75]
+    -   [getDepth][76]
+        -   [Examples][77]
 
 ## BTree
 
@@ -96,7 +86,7 @@ BTree main class
 
 ### Parameters
 
--   `attr` **(BTreeRootAttrStruct | BTreeValueAttrStruct | [string][88] \| [number][89])** Can be of type object, string, number. In case of object root/value property is expected to be value of root node.
+-   `attr` **(BTreeRootAttrStruct | BTreeValueAttrStruct | T)** Can be of type object, string, number. In case of object root/value property is expected to be value of root node.
 
 ### Examples
 
@@ -106,17 +96,11 @@ new BTree({ root: 10 });
 new BTree({ value: 10 });
 ```
 
-### root
-
-Root node of the binary tree.
-
-Type: [BTreeNode][90]
-
 ### depth
 
 Depth of the binary tree.
 
-Type: [number][89]
+Type: [number][78]
 
 ### iterator
 
@@ -130,6 +114,24 @@ for (const node of tree) {
  console.log(node.value); // 10
 }
 ```
+
+### reduce
+
+Reduces each node values using reduceFunction and returns final value.
+
+#### Parameters
+
+-   `reduceFunction`  
+-   `initialValue` **T2** Optional, Accumulator/Initial value. (optional, default `0`)
+
+#### Examples
+
+```javascript
+var tree = BTree.fromArray([10, 20, 30, 40]);
+var sum = tree.reduce((acc, node) => acc + node); // => 100
+```
+
+Returns **T2** Returns reduceed value
 
 ## toString
 
@@ -171,7 +173,7 @@ tree.insert(20);
 tree.toArray(); // => [{value:10,...},{value:20,...}]
 ```
 
-Returns **[Array][91]&lt;[BTreeNode][90]>** Returns array form of given tree.
+Returns **[Array][79]&lt;[BTreeNode][80]>** Returns array form of given tree.
 
 ## toFlatArray
 
@@ -185,7 +187,7 @@ tree.insert(20);
 tree.toFlatArray(); // => [10,20]
 ```
 
-Returns **[Array][91]&lt;any>** Returns array form of given tree.
+Returns **[Array][79]&lt;T>** Returns array form of given tree.
 
 ## insert
 
@@ -205,7 +207,7 @@ tree.insert(30);
 tree.toString(); // "10102030"
 ```
 
-Returns **[BTreeNode][90]** Returns newly created BTreeNode.
+Returns **[BTreeNode][80]** Returns newly created BTreeNode.
 
 ## insertLeftMost
 
@@ -213,9 +215,9 @@ Inserts the given value to the tree where first free left child node is found.
 
 ### Parameters
 
--   `val` **any** any type of value to be added to tree node.
+-   `val` **T** any type of value to be added to tree node.
 
-Returns **[BTreeNode][90]** Returns newly created BTreeNode.
+Returns **[BTreeNode][80]&lt;T>** Returns newly created BTreeNode.
 
 ## insertRightMost
 
@@ -223,9 +225,9 @@ Inserts the given value to the tree where first free right child node is found.
 
 ### Parameters
 
--   `val` **any** any type of value to be added to tree node.
+-   `val` **T** any type of value to be added to tree node.
 
-Returns **[BTreeNode][90]** Returns newly created BTreeNode.
+Returns **[BTreeNode][80]&lt;T>** Returns newly created BTreeNode.
 
 ## delete
 
@@ -234,9 +236,9 @@ Travarsal = Root -> L -> R.
 
 ### Parameters
 
--   `val` **any** Value to be removed.
+-   `val` **T** Value to be removed.
 
-Returns **[BTreeNode][90]** Returns removed BTreeNode.
+Returns **[BTreeNode][80]&lt;T>** Returns removed BTreeNode.
 
 ## insertAt
 
@@ -244,8 +246,8 @@ Inserts given element at given location. If location is already taken then it do
 
 ### Parameters
 
--   `val` **any** value to insert.
--   `index` **[number][89]** index at which to append new element to.
+-   `val` **T** value to insert.
+-   `index` **[number][78]** index at which to append new element to.
 
 ### Examples
 
@@ -259,41 +261,25 @@ tree.insertAt(20,2);
 
 Breadth first search. Executes given callback functions with parameters BTreeNode and path index for each node in BFS fashion.
 
-### Parameters
-
--   `callback` **[Function][92]** A callback function for execution of each node.
-
-Returns **[undefined][93]** no value.
+Returns **void** no value.
 
 ## traverseDFS
 
 Depth first search, Executes given callback functions with parameters BTreeNode and path index for each node in DFS fashion.
 
-### Parameters
-
--   `callback` **[Function][92]** A callback function for execution of each node.
-
-Returns **[undefined][93]** no value.
+Returns **void** no value.
 
 ## each
 
 Breadth first search. Executes given callback functions with parameters BTreeNode and path index for each node in BFS fashion.
 
-### Parameters
-
--   `callback` **[Function][92]** A callback function for execution of each node.
-
-Returns **[undefined][93]** no value.
+Returns **void** no value.
 
 ## forEach
 
 Breadth first search. Executes given callback functions with parameters BTreeNode and path index for each node in BFS fashion.
 
-### Parameters
-
--   `callback` **[Function][92]** A callback function for execution of each node.
-
-Returns **[undefined][93]** no value.
+Returns **void** no value.
 
 ## entries
 
@@ -308,16 +294,12 @@ for (const [index, node] of tree.entries()) {
 }
 ```
 
-Returns **IterableIterator&lt;\[[number][89], [BTreeNode][90]]>** Iterable for iterations.
+Returns **IterableIterator&lt;\[[number][78], [BTreeNode][80]&lt;T>]>** Iterable for iterations.
 
 ## map
 
 Maps current tree values to a new tree with modifying the values using given callback function.
 Uses BFS.
-
-### Parameters
-
--   `callback` **[Function][92]** callback function for value modifier.
 
 ### Examples
 
@@ -327,15 +309,11 @@ var tree2 = tree.map(n => n * 2);
 var arr2 = tree2.toArray(); // [{value:20,...},{value:40,...},{value:60,...},{value:80,...}]
 ```
 
-Returns **[BTree][94]** A new BTree
+Returns **[BTree][81]&lt;T>** A new BTree
 
 ## filter
 
 Filters each item based on given filter function
-
-### Parameters
-
--   `filterFnc` **[Function][92]** callback function for filtering purpose.
 
 ### Examples
 
@@ -347,25 +325,7 @@ var arr2 = tree2.toArray(); // [{value:10,...},{value:20,...},{value:40,...}]
 
 -   Throws **any** FilteredRootError, Error when root node gets filtered out.
 
-Returns **[BTree][94]** New filtered instance of tree.
-
-## reduce
-
-Reduces each node values using reduceFunction and returns final value.
-
-### Parameters
-
--   `reduceFunction` **[Function][92]** callback function for reducing each node value to a final value.
--   `initialValue` **([number][89] | any)** Optional, Accumulator/Initial value.
-
-### Examples
-
-```javascript
-var tree = BTree.fromArray([10, 20, 30, 40]);
-var sum = tree.reduce((acc, node) => acc + node); // => 100
-```
-
-Returns **any** Returns reduceed value
+Returns **[BTree][81]&lt;T>** New filtered instance of tree.
 
 ## reverse
 
@@ -379,7 +339,7 @@ var tree = BTree.fromArray([10, 20, 30, 40, 50, 60, 70, 80]);
 tree.reverse().toArray(); // => [10, 30, 20, 70, 60, 50, 40, 80]
 ```
 
-Returns **[BTree][94]** Returns current tree instance.
+Returns **[BTree][81]&lt;T>** Returns current tree instance.
 
 ## indexOf
 
@@ -387,7 +347,7 @@ Returns first index of a value matched, if it is not present, it returns -1.
 
 ### Parameters
 
--   `value` **any** Any value to find.
+-   `value` **T** Any value to find.
 
 ### Examples
 
@@ -397,7 +357,7 @@ tree.indexOf(30); // => 3
 tree.indexOf(51); // => -1
 ```
 
-Returns **[number][89]** Returns index of given item.
+Returns **[number][78]** Returns index of given item.
 
 ## includes
 
@@ -405,7 +365,7 @@ Checks if given item exists or not, returns boolean.
 
 ### Parameters
 
--   `value` **any** Any value to check if it exists or not.
+-   `value` **T** Any value to check if it exists or not.
 
 ### Examples
 
@@ -415,7 +375,7 @@ tree.includes(30); // true
 tree.includes(51); // false
 ```
 
-Returns **[boolean][95]** Returns true if it is present, otherwise false.
+Returns **[boolean][82]** Returns true if it is present, otherwise false.
 
 ## exists
 
@@ -423,7 +383,7 @@ Checks if given item exists or not, returns boolean.
 
 ### Parameters
 
--   `value` **any** Any value to check if it exists or not.
+-   `value` **T** Any value to check if it exists or not.
 
 ### Examples
 
@@ -433,7 +393,7 @@ tree.exists(30); // true
 tree.exists(51); // false
 ```
 
-Returns **[boolean][95]** Returns true if it is present, otherwise false.
+Returns **[boolean][82]** Returns true if it is present, otherwise false.
 
 ## has
 
@@ -441,7 +401,7 @@ Checks if given item exists or not, returns boolean.
 
 ### Parameters
 
--   `value` **any** Any value to check if it exists or not.
+-   `value` **T** Any value to check if it exists or not.
 
 ### Examples
 
@@ -451,7 +411,7 @@ tree.has(30); // true
 tree.has(51); // false
 ```
 
-Returns **[boolean][95]** Returns true if it is present, otherwise false.
+Returns **[boolean][82]** Returns true if it is present, otherwise false.
 
 ## sort
 
@@ -459,12 +419,12 @@ Sorts the tree based on compare function, Has option to sort only at children le
 
 ### Parameters
 
--   `compareFnc` **[Function][92]** Function used to determine the order of the elements. It is expected to return
+-   `compareFnc` **[Function][83]** Function used to determine the order of the elements. It is expected to return
     a negative value if first argument is less than second argument, zero if they're equal and a positive
     value otherwise. If omitted, the elements are sorted in ascending, ASCII character order.```ts
     (a, b) => a - b)
     ```
--   `atOnlyFirstChildLevel` **[boolean][95]** Optiona, Flag to specify if first child of each node should sorted. Default is `false`.
+-   `atOnlyFirstChildLevel` **[boolean][82]** Optiona, Flag to specify if first child of each node should sorted. Default is `false`.
 
 ### Examples
 
@@ -473,7 +433,7 @@ var tree = BTree.fromArray([10, 200, 100, 50, 60, 90, 5, 3]);
 tree.sort().toFlatArray(); // => [3,5,10,50,60,90,100,200]
 ```
 
-Returns **[undefined][93]** Returns undefined.
+Returns **void** Returns undefined.
 
 ## print
 
@@ -489,7 +449,7 @@ tree.print();
 |- 3 (3)
 ```
 
-Returns **[undefined][93]** Returns undefined.
+Returns **void** Returns undefined.
 
 ## find
 
@@ -497,9 +457,9 @@ Returns the first matched tree node. Traverses using BFS.
 
 ### Parameters
 
--   `item` **any** any value to find inside the tree.
+-   `item` **T** any value to find inside the tree.
 
-Returns **[BTreeNode][90]** Returns the first matched tree node, if not found, returns null.
+Returns **([BTreeNode][80]&lt;T> | null)** Returns the first matched tree node, if not found, returns null.
 
 ## getIndexFromPath
 
@@ -507,9 +467,9 @@ Returns index value from given path.
 
 ### Parameters
 
--   `path` **[Array][91]&lt;(`"U"` \| `"L"` \| `"R"`)>** Array for U L or R, which represents the quickest path to get to a node.
+-   `path` **[Array][79]&lt;(`"U"` \| `"L"` \| `"R"`)>** Array for U L or R, which represents the quickest path to get to a node.
 
-Returns **[number][89]** Returns index value.
+Returns **[number][78]** Returns index value.
 
 ## getPathFromIndex
 
@@ -517,9 +477,9 @@ Returns Path equivalent to the given index.
 
 ### Parameters
 
--   `index` **[number][89]** Index number from which path to be calculated.
+-   `index` **[number][78]** Index number from which path to be calculated.
 
-Returns **[Array][91]&lt;(`"U"` \| `"L"` \| `"R"`)>** Path equivalent to the given index.
+Returns **[Array][79]&lt;(`"U"` \| `"L"` \| `"R"`)>** Path equivalent to the given index.
 
 ## fromArray
 
@@ -527,7 +487,7 @@ Converts given values into a Binary Tree.
 
 ### Parameters
 
--   `arr` **any** Any array of values.
+-   `arr` **[Array][79]&lt;T2>** Any array of values.
 
 ### Examples
 
@@ -535,7 +495,7 @@ Converts given values into a Binary Tree.
 var tree = BTree.fromArray([10,20,30,40]);
 ```
 
-Returns **[BTree][94]** Newly generated tree.
+Returns **[BTree][81]&lt;T2>** Newly generated tree.
 
 ## BTreeNode
 
@@ -550,18 +510,6 @@ var node2 = new BTreeNode({ value: 20, rNode: node, lNode: node3 });
 console.log(node2.lNode.value); // 30
 ```
 
-### value
-
-Type: T
-
-### lNode
-
-Type: [BTreeNode][90]
-
-### rNode
-
-Type: [BTreeNode][90]
-
 ### validate
 
 Validates a BTree node, it must have a valid value (no undefined nor null).
@@ -574,7 +522,7 @@ var node = new BTreeNode({ value: 10 });
 console.log(node.validate()); // true
 ```
 
-Returns **[boolean][95]** 
+Returns **[boolean][82]** 
 
 ### toJSON
 
@@ -603,7 +551,7 @@ var lNode = new BTreeNode({ value: 15, lNode: node });
 console.log(node.toString()); // "1015"
 ```
 
-Returns **[string][88]** 
+Returns **[string][84]** 
 
 ### getDepth
 
@@ -619,7 +567,7 @@ var l2Node = new BTreeNode({ value: 15, lNode: lNode });
 console.log(l2Node.getDepth()); // 3
 ```
 
-Returns **[number][89]** 
+Returns **[number][78]** 
 
 [1]: #btree
 
@@ -627,186 +575,164 @@ Returns **[number][89]**
 
 [3]: #examples
 
-[4]: #root
+[4]: #depth
 
-[5]: #depth
+[5]: #iterator
 
-[6]: #iterator
+[6]: #examples-1
 
-[7]: #examples-1
+[7]: #reduce
 
-[8]: #tostring
+[8]: #parameters-1
 
 [9]: #examples-2
 
-[10]: #tojson
+[10]: #tostring
 
 [11]: #examples-3
 
-[12]: #toarray
+[12]: #tojson
 
 [13]: #examples-4
 
-[14]: #toflatarray
+[14]: #toarray
 
 [15]: #examples-5
 
-[16]: #insert
+[16]: #toflatarray
 
-[17]: #parameters-1
+[17]: #examples-6
 
-[18]: #examples-6
+[18]: #insert
 
-[19]: #insertleftmost
+[19]: #parameters-2
 
-[20]: #parameters-2
+[20]: #examples-7
 
-[21]: #insertrightmost
+[21]: #insertleftmost
 
 [22]: #parameters-3
 
-[23]: #delete
+[23]: #insertrightmost
 
 [24]: #parameters-4
 
-[25]: #insertat
+[25]: #delete
 
 [26]: #parameters-5
 
-[27]: #examples-7
+[27]: #insertat
 
-[28]: #traversebfs
+[28]: #parameters-6
 
-[29]: #parameters-6
+[29]: #examples-8
 
-[30]: #traversedfs
+[30]: #traversebfs
 
-[31]: #parameters-7
+[31]: #traversedfs
 
 [32]: #each
 
-[33]: #parameters-8
+[33]: #foreach
 
-[34]: #foreach
+[34]: #entries
 
-[35]: #parameters-9
+[35]: #examples-9
 
-[36]: #entries
+[36]: #map
 
-[37]: #examples-8
+[37]: #examples-10
 
-[38]: #map
+[38]: #filter
 
-[39]: #parameters-10
+[39]: #examples-11
 
-[40]: #examples-9
+[40]: #reverse
 
-[41]: #filter
+[41]: #examples-12
 
-[42]: #parameters-11
+[42]: #indexof
 
-[43]: #examples-10
+[43]: #parameters-7
 
-[44]: #reduce
+[44]: #examples-13
 
-[45]: #parameters-12
+[45]: #includes
 
-[46]: #examples-11
+[46]: #parameters-8
 
-[47]: #reverse
+[47]: #examples-14
 
-[48]: #examples-12
+[48]: #exists
 
-[49]: #indexof
+[49]: #parameters-9
 
-[50]: #parameters-13
+[50]: #examples-15
 
-[51]: #examples-13
+[51]: #has
 
-[52]: #includes
+[52]: #parameters-10
 
-[53]: #parameters-14
+[53]: #examples-16
 
-[54]: #examples-14
+[54]: #sort
 
-[55]: #exists
+[55]: #parameters-11
 
-[56]: #parameters-15
+[56]: #examples-17
 
-[57]: #examples-15
+[57]: #print
 
-[58]: #has
+[58]: #examples-18
 
-[59]: #parameters-16
+[59]: #find
 
-[60]: #examples-16
+[60]: #parameters-12
 
-[61]: #sort
+[61]: #getindexfrompath
 
-[62]: #parameters-17
+[62]: #parameters-13
 
-[63]: #examples-17
+[63]: #getpathfromindex
 
-[64]: #print
+[64]: #parameters-14
 
-[65]: #examples-18
+[65]: #fromarray
 
-[66]: #find
+[66]: #parameters-15
 
-[67]: #parameters-18
+[67]: #examples-19
 
-[68]: #getindexfrompath
+[68]: #btreenode
 
-[69]: #parameters-19
+[69]: #examples-20
 
-[70]: #getpathfromindex
+[70]: #validate
 
-[71]: #parameters-20
+[71]: #examples-21
 
-[72]: #fromarray
+[72]: #tojson-1
 
-[73]: #parameters-21
+[73]: #examples-22
 
-[74]: #examples-19
+[74]: #tostring-1
 
-[75]: #btreenode
+[75]: #examples-23
 
-[76]: #examples-20
+[76]: #getdepth
 
-[77]: #value
+[77]: #examples-24
 
-[78]: #lnode
+[78]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 
-[79]: #rnode
+[79]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[80]: #validate
+[80]: #btreenode
 
-[81]: #examples-21
+[81]: #btree
 
-[82]: #tojson-1
+[82]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-[83]: #examples-22
+[83]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[84]: #tostring-1
-
-[85]: #examples-23
-
-[86]: #getdepth
-
-[87]: #examples-24
-
-[88]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-
-[89]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
-
-[90]: #btreenode
-
-[91]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-
-[92]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
-
-[93]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined
-
-[94]: #btree
-
-[95]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[84]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String

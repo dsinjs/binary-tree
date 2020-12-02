@@ -1,11 +1,19 @@
-/**
- * @typedef {{value:T,lNode: BTreeNodeStruct | BTreeNode, rNode: BTreeNodeStruct | BTreeNode}} BTreeNodeStruct
- * @interface
- * @private
- */
+declare let module: any;
 
-const bTreeNodeStruct = {};
+export declare class ExtendedWindow extends Window {
+  DSinJS: {
+    BTreeNode: typeof BTreeNode;
+  };
+  BTreeNode: typeof BTreeNode;
+}
 
+declare let window: ExtendedWindow;
+
+export declare class BTreeNodeStruct<T> {
+  value?: T | null;
+  lNode?: BTreeNodeStruct<T> | null;
+  rNode?: BTreeNodeStruct<T> | null;
+}
 
 /**
  * Binary Tree node class, contains 2 child nodes and single value.
@@ -17,42 +25,46 @@ const bTreeNodeStruct = {};
  * var node2 = new BTreeNode({ value: 20, rNode: node, lNode: node3 });
  * console.log(node2.lNode.value); // 30
  */
-class BTreeNode {
+export class BTreeNode<T = any> {
+  /**
+   * @property value
+   * Contains actual value
+   * @type {T}
+   * @public
+   */
+  value: T | null;
+  /**
+   * @property lNode
+   * Contains left child node
+   * @type {BTreeNode}
+   * @public
+   */
+  lNode: BTreeNode<T> | null;
+  /**
+   * @property rNode
+   * Contains right child node
+   * @type {BTreeNode}
+   * @public
+   */
+  rNode: BTreeNode<T> | null;
+
   /**
    * 
    * @param {BTreeNodeStruct} attr attributes to initialize the node.
    */
-  constructor(attr = {}) {
-    /**
-     * @property value
-     * Contains actual value
-     * @type {T}
-     * @public
-     */
+  constructor(attr: BTreeNodeStruct<T>) {
     this.value = attr.value || null;
 
-    /**
-     * @property lNode
-     * Contains left child node
-     * @type {BTreeNode}
-     * @public
-     */
-    this.lNode = attr.lNode || null;
+    this.lNode = attr.lNode as BTreeNode<T> || null;
 
-    if (!this.lNode instanceof BTreeNode) {
-      this.lNode = new BTreeNode(this.lNode);
+    if (!this.lNode as any instanceof BTreeNode) {
+      this.lNode = new BTreeNode(this.lNode as BTreeNodeStruct<T>);
     }
 
-    /**
-     * @property rNode
-     * Contains right child node
-     * @type {BTreeNode}
-     * @public
-     */
-    this.rNode = attr.rNode || null;
+    this.rNode = attr.rNode as BTreeNode<T> || null;
 
-    if (!this.rNode instanceof BTreeNode) {
-      this.rNode = new BTreeNode(this.rNode);
+    if (!this.rNode as any instanceof BTreeNode) {
+      this.rNode = new BTreeNode(this.rNode as BTreeNodeStruct<T>);
     }
 
     if (!this.validate()) {
@@ -69,7 +81,7 @@ class BTreeNode {
    * var node = new BTreeNode({ value: 10 });
    * console.log(node.validate()); // true
    */
-  validate() {
+  validate(): boolean {
     return (this.value != void 0 || this.value != null);
   }
 
@@ -82,9 +94,10 @@ class BTreeNode {
    * var lNode = new BTreeNode({ value: 15, lNode: lNode });
    * console.log(node.toJSON()); // {value:15,lNode: {value: 10,lNode:null,rNode:null},rNode:null}
    */
-  toJSON() {
+  toJSON(): BTreeNodeStruct<T> {
+    const anyVal: any = this.value;
     return {
-      value: (this.value && typeof this.value.toJSON === "function") ? this.value.toJSON() : this.value,
+      value: (this.value && typeof anyVal.toJSON === "function") ? anyVal.toJSON() : this.value,
       lNode: (this.lNode === null) ? null : this.lNode.toJSON(),
       rNode: (this.rNode === null) ? null : this.rNode.toJSON()
     };
@@ -100,12 +113,13 @@ class BTreeNode {
    * var lNode = new BTreeNode({ value: 15, lNode: node });
    * console.log(node.toString()); // "1015"
    */
-  toString() {
-    const leftStr = (this.lNode === null) ? "" : this.lNode.toString();
-    const rightStr = (this.rNode === null) ? "" : this.rNode.toString();
-    const currStr = (typeof this.value.toString === "function") ? this.value.toString() : String(this.value);
+  toString(): string {
+    const anyVar: any = this.value;
+    const leftStr: string = (this.lNode === null) ? "" : this.lNode.toString();
+    const rightStr: string = (this.rNode === null) ? "" : this.rNode.toString();
+    const currStr: string = (typeof anyVar.toString === "function") ? anyVar.toString() : String(this.value);
 
-    return this.value.toString() + leftStr + rightStr;
+    return currStr + leftStr + rightStr;
   }
 
   /**
@@ -119,9 +133,9 @@ class BTreeNode {
    * var l2Node = new BTreeNode({ value: 15, lNode: lNode });
    * console.log(l2Node.getDepth()); // 3
    */
-  getDepth() {
-    const leftDepth = (this.lNode === null) ? 1 : this.lNode.getDepth() + 1;
-    const rightDepth = (this.rNode === null) ? 1 : this.rNode.getDepth() + 1;
+  getDepth(): number {
+    const leftDepth: number = (this.lNode === null) ? 1 : this.lNode.getDepth() + 1;
+    const rightDepth: number = (this.rNode === null) ? 1 : this.rNode.getDepth() + 1;
 
     return Math.max(leftDepth, rightDepth);
   }
@@ -131,6 +145,7 @@ if (typeof module != "undefined") {
   module.exports = { BTreeNode };
 }
 if (typeof window != "undefined") {
+  const modName: any = "DSinJS";
   window.DSinJS = window.DSinJS || {};
   window.DSinJS.BTreeNode = BTreeNode;
 }
