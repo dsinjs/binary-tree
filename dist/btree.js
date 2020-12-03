@@ -80,7 +80,8 @@ if (typeof window !== "undefined") {
 var BTree = /** @class */ (function () {
     /**
      * Constructor for Binary Tree.
-     * @param {BTreeRootAttrStruct|BTreeValueAttrStruct|T} attr Can be of type object, string, number. In case of object root/value property is expected to be value of root node.
+     * @param {BTreeRootAttrStruct|BTreeValueAttrStruct|T} attr Can be of type object, string, number.
+     * In case of object root/value property is expected to be value of root node.
      * @constructor
      */
     function BTree(attr) {
@@ -307,8 +308,10 @@ var BTree = /** @class */ (function () {
         this.depth = this.root.getDepth();
     };
     /**
-     * Breadth first search. Executes given callback functions with parameters BTreeNode and path index for each node in BFS fashion.
-     * @param {{(node: BTreeNode<T>, index: number) => any}} callback A callback function for execution of each node.
+     * Breadth first search. Executes given callback functions with parameters BTreeNode and path index
+     * for each node in BFS fashion.
+     * @param {{(node: BTreeNode<T>, index: number) => any}} callback A callback function for execution of
+     * each node.
      * @method traverseBFS
      * @member
      * @public
@@ -344,7 +347,8 @@ var BTree = /** @class */ (function () {
         recInser(this.root, ['U']);
     };
     /**
-     * Depth first search, Executes given callback functions with parameters BTreeNode and path index for each node in DFS fashion.
+     * Depth first search, Executes given callback functions with parameters BTreeNode and path index for each node
+     * in DFS fashion.
      * @param {{(node: BTreeNode<T>, index: number) => any}} callback A callback function for execution of each node.
      * @method traverseDFS
      * @member
@@ -376,7 +380,8 @@ var BTree = /** @class */ (function () {
         recFnc(this.root, ['U']);
     };
     /**
-     * Breadth first search. Executes given callback functions with parameters BTreeNode and path index for each node in BFS fashion.
+     * Breadth first search. Executes given callback functions with parameters BTreeNode
+     * and path index for each node in BFS fashion.
      * @param {{(node: BTreeNode<T>, index: number) => any}} callback A callback function for execution of each node.
      * @method each
      * @member
@@ -387,7 +392,8 @@ var BTree = /** @class */ (function () {
         return this.traverseBFS(callback);
     };
     /**
-     * Breadth first search. Executes given callback functions with parameters BTreeNode and path index for each node in BFS fashion.
+     * Breadth first search. Executes given callback functions with parameters BTreeNode and
+     * path index for each node in BFS fashion.
      * @param {{(node: BTreeNode<T>, index: number) => any}} callback A callback function for execution of each node.
      * @method forEach
      * @member
@@ -493,7 +499,8 @@ var BTree = /** @class */ (function () {
     };
     /**
      * Reduces each node values using reduceFunction and returns final value.
-     * @param {(next: T2, value: T, index: number, tree: BTree<T>) => T2} reduceFunction callback function for reducing each node value to a final value.
+     * @param {(next: T2, value: T, index: number, tree: BTree<T>) => T2} reduceFunction callback function
+     * for reducing each node value to a final value.
      * @param {T2} initialValue Optional, Accumulator/Initial value.
      * @method reduce<T2>
      * @member
@@ -611,7 +618,8 @@ var BTree = /** @class */ (function () {
      * ```ts
      * (a, b) => a - b)
      * ```
-     * @param {boolean} atOnlyFirstChildLevel Optiona, Flag to specify if first child of each node should sorted. Default is `false`.
+     * @param {boolean} atOnlyFirstChildLevel Optiona, Flag to specify if first child of each node should sorted.
+     * Default is `false`.
      * @method sort
      * @member
      * @public

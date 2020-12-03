@@ -42,7 +42,8 @@ export declare class BTree<T = any> {
     depth: number;
     /**
      * Constructor for Binary Tree.
-     * @param {BTreeRootAttrStruct|BTreeValueAttrStruct|T} attr Can be of type object, string, number. In case of object root/value property is expected to be value of root node.
+     * @param {BTreeRootAttrStruct|BTreeValueAttrStruct|T} attr Can be of type object, string, number.
+     * In case of object root/value property is expected to be value of root node.
      * @constructor
      */
     constructor(attr: BTreeRootAttrStruct<T> | BTreeValueAttrStruct<T> | T);
@@ -149,8 +150,10 @@ export declare class BTree<T = any> {
      */
     insertAt(val: T, index: number): void;
     /**
-     * Breadth first search. Executes given callback functions with parameters BTreeNode and path index for each node in BFS fashion.
-     * @param {{(node: BTreeNode<T>, index: number) => any}} callback A callback function for execution of each node.
+     * Breadth first search. Executes given callback functions with parameters BTreeNode and path index
+     * for each node in BFS fashion.
+     * @param {{(node: BTreeNode<T>, index: number) => any}} callback A callback function for execution of
+     * each node.
      * @method traverseBFS
      * @member
      * @public
@@ -158,7 +161,8 @@ export declare class BTree<T = any> {
      */
     traverseBFS(callback: (node: BTreeNode<T>, index: number) => any): void;
     /**
-     * Depth first search, Executes given callback functions with parameters BTreeNode and path index for each node in DFS fashion.
+     * Depth first search, Executes given callback functions with parameters BTreeNode and path index for each node
+     * in DFS fashion.
      * @param {{(node: BTreeNode<T>, index: number) => any}} callback A callback function for execution of each node.
      * @method traverseDFS
      * @member
@@ -167,7 +171,8 @@ export declare class BTree<T = any> {
      */
     traverseDFS(callback: (node: BTreeNode<T>, index: number) => any): void;
     /**
-     * Breadth first search. Executes given callback functions with parameters BTreeNode and path index for each node in BFS fashion.
+     * Breadth first search. Executes given callback functions with parameters BTreeNode
+     * and path index for each node in BFS fashion.
      * @param {{(node: BTreeNode<T>, index: number) => any}} callback A callback function for execution of each node.
      * @method each
      * @member
@@ -176,7 +181,8 @@ export declare class BTree<T = any> {
      */
     each(callback: (node: BTreeNode<T>, index: number) => any): void;
     /**
-     * Breadth first search. Executes given callback functions with parameters BTreeNode and path index for each node in BFS fashion.
+     * Breadth first search. Executes given callback functions with parameters BTreeNode and
+     * path index for each node in BFS fashion.
      * @param {{(node: BTreeNode<T>, index: number) => any}} callback A callback function for execution of each node.
      * @method forEach
      * @member
@@ -248,7 +254,8 @@ export declare class BTree<T = any> {
     filter(filterFnc: (value: T) => boolean): BTree<T>;
     /**
      * Reduces each node values using reduceFunction and returns final value.
-     * @param {(next: T2, value: T, index: number, tree: BTree<T>) => T2} reduceFunction callback function for reducing each node value to a final value.
+     * @param {(next: T2, value: T, index: number, tree: BTree<T>) => T2} reduceFunction callback function
+     * for reducing each node value to a final value.
      * @param {T2} initialValue Optional, Accumulator/Initial value.
      * @method reduce<T2>
      * @member
@@ -331,7 +338,8 @@ export declare class BTree<T = any> {
      * ```ts
      * (a, b) => a - b)
      * ```
-     * @param {boolean} atOnlyFirstChildLevel Optiona, Flag to specify if first child of each node should sorted. Default is `false`.
+     * @param {boolean} atOnlyFirstChildLevel Optiona, Flag to specify if first child of each node should sorted.
+     * Default is `false`.
      * @method sort
      * @member
      * @public

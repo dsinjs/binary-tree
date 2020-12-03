@@ -75,7 +75,8 @@ export class BTree<T = any> {
   depth: number = 1;
   /**
    * Constructor for Binary Tree.
-   * @param {BTreeRootAttrStruct|BTreeValueAttrStruct|T} attr Can be of type object, string, number. In case of object root/value property is expected to be value of root node.
+   * @param {BTreeRootAttrStruct|BTreeValueAttrStruct|T} attr Can be of type object, string, number.
+   * In case of object root/value property is expected to be value of root node.
    * @constructor
    */
   constructor(attr: BTreeRootAttrStruct<T> | BTreeValueAttrStruct<T> | T) {
@@ -292,8 +293,10 @@ export class BTree<T = any> {
   }
 
   /**
-   * Breadth first search. Executes given callback functions with parameters BTreeNode and path index for each node in BFS fashion.
-   * @param {{(node: BTreeNode<T>, index: number) => any}} callback A callback function for execution of each node.
+   * Breadth first search. Executes given callback functions with parameters BTreeNode and path index
+   * for each node in BFS fashion.
+   * @param {{(node: BTreeNode<T>, index: number) => any}} callback A callback function for execution of
+   * each node.
    * @method traverseBFS
    * @member
    * @public
@@ -331,7 +334,8 @@ export class BTree<T = any> {
   }
 
   /**
-   * Depth first search, Executes given callback functions with parameters BTreeNode and path index for each node in DFS fashion.
+   * Depth first search, Executes given callback functions with parameters BTreeNode and path index for each node
+   * in DFS fashion.
    * @param {{(node: BTreeNode<T>, index: number) => any}} callback A callback function for execution of each node.
    * @method traverseDFS
    * @member
@@ -365,7 +369,8 @@ export class BTree<T = any> {
   }
 
   /**
-   * Breadth first search. Executes given callback functions with parameters BTreeNode and path index for each node in BFS fashion.
+   * Breadth first search. Executes given callback functions with parameters BTreeNode
+   * and path index for each node in BFS fashion.
    * @param {{(node: BTreeNode<T>, index: number) => any}} callback A callback function for execution of each node.
    * @method each
    * @member
@@ -377,7 +382,8 @@ export class BTree<T = any> {
   }
 
   /**
-   * Breadth first search. Executes given callback functions with parameters BTreeNode and path index for each node in BFS fashion.
+   * Breadth first search. Executes given callback functions with parameters BTreeNode and
+   * path index for each node in BFS fashion.
    * @param {{(node: BTreeNode<T>, index: number) => any}} callback A callback function for execution of each node.
    * @method forEach
    * @member
@@ -488,7 +494,8 @@ export class BTree<T = any> {
 
   /**
    * Reduces each node values using reduceFunction and returns final value.
-   * @param {(next: T2, value: T, index: number, tree: BTree<T>) => T2} reduceFunction callback function for reducing each node value to a final value.
+   * @param {(next: T2, value: T, index: number, tree: BTree<T>) => T2} reduceFunction callback function
+   * for reducing each node value to a final value.
    * @param {T2} initialValue Optional, Accumulator/Initial value.
    * @method reduce<T2>
    * @member
@@ -498,7 +505,8 @@ export class BTree<T = any> {
    * var tree = BTree.fromArray([10, 20, 30, 40]);
    * var sum = tree.reduce((acc, node) => acc + node); // => 100
    */
-  reduce<T2 = any>(reduceFunction: (next: T2, value: T, index: number, tree: BTree<T>) => T2, initialValue: T2 = 0 as any): T2 {
+  reduce<T2 = any>(reduceFunction: (next: T2, value: T, index: number, tree: BTree<T>) => T2,
+    initialValue: T2 = 0 as any): T2 {
     let next = initialValue;
     this.each((node: BTreeNode<T>, index) => {
       next = reduceFunction(next, node.value as T, index, this);
@@ -611,7 +619,8 @@ export class BTree<T = any> {
    * ```ts
    * (a, b) => a - b)
    * ```
-   * @param {boolean} atOnlyFirstChildLevel Optiona, Flag to specify if first child of each node should sorted. Default is `false`.
+   * @param {boolean} atOnlyFirstChildLevel Optiona, Flag to specify if first child of each node should sorted.
+   * Default is `false`.
    * @method sort
    * @member
    * @public
@@ -620,7 +629,9 @@ export class BTree<T = any> {
    * var tree = BTree.fromArray([10, 200, 100, 50, 60, 90, 5, 3]);
    * tree.sort().toFlatArray(); // => [3,5,10,50,60,90,100,200]
    */
-  sort(compareFnc: <T2>(a: T2, b: T2) => number = (a = 0 as any, b = 0 as any) => { return (a < b) ? -1 : (a == b) ? 0 : 1; }, atOnlyFirstChildLevel: boolean = false): void {
+  sort(compareFnc: <T2>(a: T2, b: T2) => number =
+    (a = 0 as any, b = 0 as any) => { return (a < b) ? -1 : (a == b) ? 0 : 1; },
+    atOnlyFirstChildLevel: boolean = false): void {
     if (atOnlyFirstChildLevel) {
       const DFS = (node: BTreeNode<T>) => {
         if (node !== null) {
