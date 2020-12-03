@@ -12,8 +12,8 @@
     "browserify": "browserify dist/index.js -o dist/dsinjs-binarytree.js",
     "uglifyjs": "uglifyjs --compress --mangle --output dist/dsinjs-binarytree.min.js -- dist/dsinjs-binarytree.js",
     "doc": "npm run documentmd && npm run documenthtml",
-    "documentmd": "documentation build dist/btree.js -f md -o DOCUMENTATION.md",
-    "documenthtml": "documentation build dist/btree.js -f html -o docs"
+    "documentmd": "documentation build dist/index.js -f md -o DOCUMENTATION.md",
+    "documenthtml": "documentation build dist/index.js -f html -o docs"
   },
   "files": [
     "src",
